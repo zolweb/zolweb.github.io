@@ -1,23 +1,45 @@
-# Minimal Mistakes
+# ZOL - Blog
 
-**[Minimal Mistakes](http://mmistakes.github.io/minimal-mistakes)** is a two column responsive Jekyll theme perfect for powering your GitHub hosted blog. 
+Built with:
 
-## Minimal Mistakes is all about:
-
-* Responsive templates. Looking good on mobile, tablet, and desktop.
-* Gracefully degrading in older browsers. Compatible with Internet Explorer 8+ and all modern browsers. 
-* Minimal embellishments -- content first.
-* Optional large feature images for posts and pages.
-* Simple and clear permalink structure.
-* [Custom 404 page](http://mmistakes.github.io/minimal-mistakes/404.html) to get you started.
-* Support for Disqus Comments
-
-![screenshot of Minimal Mistakes theme](http://mmistakes.github.io/minimal-mistakes/images/mm-theme-post-600.jpg)
-
-See a [live version of Minimal Mistakes](http://mmistakes.github.io/minimal-mistakes/) hosted on GitHub.
-
-## Getting Started
+* [Jekyll](http://jekyllrb.com/)
+* [Docker](https://docs.docker.com/)
+* [Docker compose](https://docs.docker.com/compose/)
+* Jekyll Minimal Mistakes theme
 
 Minimal Mistakes takes advantage of Sass and data files to make customizing easier. These features require Jekyll 2.x and will not work with older versions of Jekyll.
 
-To learn how to install and use this theme check out the [Setup Guide](http://mmistakes.github.io/minimal-mistakes/theme-setup/) for more information.
+* [Documentation](http://mmistakes.github.io/minimal-mistakes/theme-setup/)
+* [Github repository](https://github.com/mmistakes/minimal-mistakes)
+* [Live version](http://mmistakes.github.io/minimal-mistakes/)
+
+## Getting Started
+
+Get this repository into your workspace:
+
+```
+git clone git@github.com:zolweb/zolweb.github.io.git && cd zolweb.github.io
+```
+
+Install the project thanks to the following [Makefile](./Makefile) command:
+
+```
+make install
+```
+
+The [Makefile](./Makefile) runs containers thanks to [docker compose](https://docs.docker.com/compose/) and the very simple [docker-compose.yml](./docker-compose.yml) configuration file:
+
+```lang
+web:
+  build: .
+  ports:
+   - "80:4000"
+  volumes:
+   - .:/app
+```
+
+The [Makefile](./Makefile) contains everything needed to install [Docker](https://docs.docker.com/) and [docker compose](https://docs.docker.com/compose/) through `requirements` target.
+
+## Access the blog in your browser
+
+Go to [http://127.0.0.1](http://127.0.0.1) to see the magic if everything is fine.
