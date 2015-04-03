@@ -74,7 +74,7 @@ build: remove
 	@echo "$(step) Building images docker $(step)"
 	@$(compose) build
 
-install: remove build bundle jkbuild start
+install: build bundle jkbuild start nginx-proxy
 
 bundle:
 	@echo "$(step) Bundler $(step)"
@@ -115,3 +115,7 @@ remove: stop
 bash:
 	@echo "$(step) Bash $(project) $(step)"
 	@$(compose) run --rm web bash
+
+nginx-proxy:
+	@echo "Starting NGINX REVERSE PROXY"
+	@$(shell docker run -d -p 80:80 -v /var/run/docker.sock:/tmp/docker.sock jwilder/nginx-proxy > /dev/null 2> /dev/null || true)

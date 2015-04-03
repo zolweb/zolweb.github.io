@@ -42,4 +42,10 @@ The [Makefile](./Makefile) contains everything needed to install [Docker](https:
 
 ## Access the blog in your browser
 
-Go to [http://127.0.0.1](http://127.0.0.1) to see the magic if everything is fine.
+We are using an nginx reverse proxy to access our container for custom domain name or from outside world.
+
+The nginx reverse proxy come from this docker image/repo: [https://github.com/jwilder/nginx-proxy](https://github.com/jwilder/nginx-proxy)
+
+The docker run command for the proxy is set into the [Makefile](./Makefile) (nginx-proxy target)
+
+Go to [http://blog.zol.dev](http://blog.zol.dev) to see the magic if everything is fine.
