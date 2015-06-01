@@ -1,8 +1,8 @@
 # Site wide configuration
 
-title:            Site Title
+title:            Blog ZOL
 locale:           en_US
-url:              
+url:
 
 
 # Jekyll configuration
@@ -26,7 +26,7 @@ kramdown:
 
 # Site owner
 owner:
-  name: Your Name
+  name: Zol
   avatar: bio-photo.jpg
   bio: "Describe your self."
   email: 

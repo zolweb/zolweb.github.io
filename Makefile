@@ -65,7 +65,7 @@ install-docker:
 
 install-docker-compose:
 	@echo "$(step) Installing docker-compose $(step)"
-	@sudo bash -c "curl -L https://github.com/docker/compose/releases/download/1.1.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose"
+	@sudo bash -c "curl -L https://github.com/docker/compose/releases/download/1.2.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose"
 	@sudo chmod +x /usr/local/bin/docker-compose
 
 requirements: install-docker install-docker-compose
@@ -81,7 +81,7 @@ bundle:
 	@$(compose) run --rm web bash -ci '\
                 $(CREATE_USER_COMMAND) \
                 $(AUTHORIZE_HOME_DIR_COMMAND) \
-                $(EXECUTE_AS) bundle install --path vendor/bundle && $(EXECUTE_AS) bundle update'
+                $(EXECUTE_AS) bundle install --path vendor/bundle && $(EXECUTE_AS) bundle check && $(EXECUTE_AS) bundle update'
 
 jkbuild:
 	@echo "$(step) Jekyll build $(step)"
@@ -119,3 +119,4 @@ bash:
 nginx-proxy:
 	@echo "Starting NGINX REVERSE PROXY"
 	@$(shell docker run -d -p 80:80 -v /var/run/docker.sock:/tmp/docker.sock jwilder/nginx-proxy > /dev/null 2> /dev/null || true)
+

@@ -1,5 +1,6 @@
 ---
 layout: post-index
-title: All Posts
-excerpt: "A List of Posts"
+title: Tous les articles ZOL
+author: yannick_pereirareis
+excerpt: "Liste de tous les articles techniques de ZOL"
 ---
