@@ -44,12 +44,12 @@ GEM
       listen (~> 2.7)
     kramdown (1.7.0)
     liquid (2.6.2)
-    listen (2.10.0)
+    listen (2.10.1)
       celluloid (~> 0.16.0)
       rb-fsevent (>= 0.9.3)
       rb-inotify (>= 0.9)
     mercenary (0.3.5)
-    octopress (3.0.7)
+    octopress (3.0.9)
       jekyll (>= 2.0)
       mercenary (~> 0.3.2)
       octopress-deploy
@@ -57,7 +57,7 @@ GEM
       octopress-hooks (~> 2.0)
       redcarpet (~> 3.0)
       titlecase
-    octopress-deploy (1.2.4)
+    octopress-deploy (1.2.7)
       colorator
     octopress-escape-code (2.0.6)
       octopress-hooks (~> 2.0)
@@ -72,7 +72,7 @@ GEM
     rb-fsevent (0.9.5)
     rb-inotify (0.9.5)
       ffi (>= 0.5.0)
-    redcarpet (3.2.3)
+    redcarpet (3.3.1)
     safe_yaml (1.0.4)
     sass (3.4.14)
     timers (4.0.1)
@@ -93,4 +93,4 @@ DEPENDENCIES
   octopress (~> 3.0.0.rc.12)
 
 BUNDLED WITH
-   1.10.3
+   1.10.4

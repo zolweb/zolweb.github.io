@@ -1,7 +1,5 @@
 web:
   build: .
-  ports:
-   - "80:4000"
   volumes:
    - .:/app
   environment:
