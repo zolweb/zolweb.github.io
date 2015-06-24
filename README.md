@@ -27,15 +27,21 @@ Install the project thanks to the following [Makefile](./Makefile) command:
 make install
 ```
 
+If you want to run app with **drafts** in dev:
+
+```
+make jkbuild "\-\-drafts"
+```
+
 The [Makefile](./Makefile) runs containers thanks to [docker compose](https://docs.docker.com/compose/) and the very simple [docker-compose.yml](./docker-compose.yml) configuration file:
 
 ```lang
 web:
   build: .
-  ports:
-   - "80:4000"
   volumes:
    - .:/app
+  environment:
+       VIRTUAL_HOST: blog.zol.dev
 ```
 
 The [Makefile](./Makefile) contains everything needed to install [Docker](https://docs.docker.com/) and [docker compose](https://docs.docker.com/compose/) through `requirements` target.
