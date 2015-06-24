@@ -1,9 +1,9 @@
 # Site wide configuration
 
 title:            Blog ZOL
-locale:           en_US
+locale:           fr_FR
 url:
-
+url_prod: blog.zol.fr
 
 # Jekyll configuration
 
@@ -28,33 +28,11 @@ kramdown:
 owner:
   name: Zol
   avatar: bio-photo.jpg
-  bio: "Describe your self."
-  email: 
-  disqus-shortname: 
-  twitter: #username
-  facebook: #username
-  google:
-    plus: #username
-    analytics: 
-    verify: 
-    ad-client: 
-    ad-slot: 
-  bing-verify: 
-  github: #username
-  stackoverflow: #http://stackoverflow.com/users/123456/username
-  linkedin: #username
-  xing: #username
-  instagram: #username
-  lastfm: #username
-  tumblr: #username
-  pinterest: #username
-  foursquare: #username
-  steam: #username
-  dribbble: #username
-  youtube: #username
-  soundcloud: #username
-  weibo: #username
-  flickr: #username
+  bio: "Développement Php et Symfony"
+  email: contact@zol.fr
+  twitter: ZOL_Web
+  github: zolweb
+
 
 include: [".htaccess", "_sass/vendor"]
 exclude: ["vendor", "lib", "config.rb", "Capfile", "config", "log", "Rakefile", "Rakefile.rb", "tmp", "less", "*.sublime-project", "*.sublime-workspace", "test", "spec", "Gruntfile.js", "package.json", "node_modules", "Gemfile", "Gemfile.lock", "LICENSE", "README.md"]

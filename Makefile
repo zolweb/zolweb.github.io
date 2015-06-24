@@ -88,13 +88,13 @@ jkbuild:
 	@$(compose) run --rm web bash -ci '\
 		$(CREATE_USER_COMMAND) \
 		$(AUTHORIZE_HOME_DIR_COMMAND) \
-		$(EXECUTE_AS) jekyll build'
+		$(EXECUTE_AS) jekyll build $(COMMAND_ARGS)'
 
 update: install
 
 up:
 	@echo "$(step) Starting $(project) $(step)"
-	@$(compose) up  web
+	@$(compose) up -d web
 
 start: up
 

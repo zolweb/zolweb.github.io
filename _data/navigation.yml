@@ -1,9 +1,9 @@
 # Site navigation links
 
-- title: About
-  url: /about/
+#- title: About
+#  url: /about/
 
-- title: Exemples
+- title: Tous les articles
   url: /posts/
 
 #- title: Theme Setup

@@ -12,8 +12,8 @@ RUN apt-get update && apt-get install -y \
 
 # Install jekyll
 
-RUN gem install jekyll -v 2.4.0
-RUN gem install jekyll-sitemap -v 0.6.1
+RUN gem install jekyll
+RUN gem install jekyll-sitemap
 RUN gem install bundler
 RUN gem install octopress --pre
 
