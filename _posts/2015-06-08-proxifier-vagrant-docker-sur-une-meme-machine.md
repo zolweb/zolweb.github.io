@@ -4,7 +4,6 @@ title: Proxifier efficacement des machines virtuelles et des containers docker t
 author: mathieu_molimard
 excerpt: "Proxifier efficacement des machines virtuelles et des containers docker tournant sur la même machine physique"
 tags: [docker, vagrant, nginx]
-modified: 2015-06-08
 comments: false
 image:
   feature: proxifier-vagrant-docker-sur-une-meme-machine.jpg
@@ -47,8 +46,6 @@ config.hostmanager.enabled = true
 config.hostmanager.manage_host = true
 {% endhighlight %}
 
-<img src="/images/docker-vagrant-2.svg">
-
 ## Docker
 
 Avec l'arrivée de **Docker**, nous avons décidé de migrer vers cet outil pour tous nos nouveaux projets,
@@ -89,6 +86,7 @@ Nous avons rencontré deux problèmes avec ce script :
 * Lors du redemarrage des containers, nous étions systématiquement obligés de redémarrer manuellement le proxy pour qu’il prenne en compte les nouvelles IP des containers. On utilisait bien des noms de domaines dans les vhosts de nginx, mais le fichier `hosts` de la machine n'était pas pris en compte sans que l'on redemarre le service.
 * Le script custom n'était pas compatble avec la commande `sed` de mac os.
 
+<img src="/images/docker-vagrant-2.svg">
 
 ### Reverse proxy nginx dans un container Docker
 
@@ -109,7 +107,7 @@ Une fois ce container lancé, nous disposons d'un reverse proxy nginx automatiqu
 Il va détecter automatiquement les containers qui nécessitent d’avoir un vhost sur le reverse proxy, c'est magique.
 
 Il suffit d’injecter dans les containers applicatifs (via le fichier docker-composer.yml dans notre cas) une variable d’environnement qui correspondra
-au ServerName / ServerAlias associé container Web.
+au ServerName / ServerAlias associé au container Web.
 
 {% highlight bash %}
 web:
@@ -142,11 +140,11 @@ et nous avons pour cela mis en place la stack suivante en utilisant [Varnish](ht
 
 <img src="/images/docker-vagrant-3.svg">
 
-Tous les nouveaux projets de ZOL étant développés avec docker, nous avons donc deux backend...
+Tous les nouveaux projets de ZOL étant développés avec docker, nous avons donc deux backend **Varnish**...
 Un premier backend **nginxDocker** qui redirige les requêtes HTTP vers le container nginx,
 et un second, **nginxHost**, pour rediriger les requêtes HTTP sur ce qui est devenu l’ancien backend, à savoir le serveur nginx installé sur la machine.
 
-Le fichier de configuration de varnish ressemble à :
+Le fichier de configuration de Varnish ressemble à :
 
 {% highlight bash %}
 backend nginxHost {
