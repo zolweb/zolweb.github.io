@@ -1,0 +1,4 @@
+web:
+    extends:
+        file: docker-compose-common.yml
+        service: web

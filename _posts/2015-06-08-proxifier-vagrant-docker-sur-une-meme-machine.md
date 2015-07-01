@@ -26,7 +26,7 @@ A l'origine, notre plateforme de pré-production hébergeait tous nos projets su
 Nous avons ensuite décidé, mi 2014, de mettre en oeuvre [VirtualBox](https://www.virtualbox.org/) et [Vagrant](https://www.vagrantup.com/)
 pour tous nos projets, en **dev** comme en **preprod**. Nous avons alors imaginé une architecture nous permettant de déployer les projets
 en pré-production grâce à Vagrant et à des VMs tournant derrière un reverse proxy Nginx.
-Grâce à un script ce procces de déploiement était quasi automatique :
+Grâce à un script ce process de déploiement était quasi automatique :
 
 * Clonage du repository sur le serveur de preprod via git.
 * Création d'un Virtual Host pour le reverse proxy Nginx.
@@ -36,7 +36,7 @@ Grâce à un script ce procces de déploiement était quasi automatique :
 
 Ce process permettait de passer d'un environnement de dev à l'environnement de preprod très simplement. La plupart du temps nous chargions des confs de dev sur la préprod.
 La partie **consommant le plus de temps** étant bien entendu le provisioning de la VM.
-La partie **la plus comliquée** étant la gestion de la communication entre le reverse proxy et les machines virtuelles.
+La partie **la plus compliquée** étant la gestion de la communication entre le reverse proxy et les machines virtuelles.
 
 Nous avons résolu ce problème grâce à un plugin Vagrant très pratique, ([vagrant-hostmanager](https://github.com/smdahlen/vagrant-hostmanager))
 permettant de mettre à jour le fichier `hosts` de l’hôte automatiquement lors du démarrage d'un VM, en ajoutant seulement deux lignes de configuration dans le `Vagrantfile`:
@@ -57,7 +57,7 @@ Par contre, cela suppose bien entendu de faire en sorte que le reverse proxy red
 Pour chaque application fonctionnant avec Docker il nous a fallu configurer une redirection et des entrées dans le fichier `hosts` de l'hôte.
 
 Le plugin **vagrant-hostmanager** ne fonctionnant que pour Vagrant (évidemment),
-nous avons créé un script shell permettant de modifer automatiquement le fichier `host` de l'hôte pour les containers docker :
+nous avons créé un script shell permettant de modifier automatiquement le fichier `host` de l'hôte pour les containers docker :
 
 
 {% highlight bash %}
@@ -83,8 +83,8 @@ fi
 
 Nous avons rencontré deux problèmes avec ce script :
 
-* Lors du redemarrage des containers, nous étions systématiquement obligés de redémarrer manuellement le proxy pour qu’il prenne en compte les nouvelles IP des containers. On utilisait bien des noms de domaines dans les vhosts de nginx, mais le fichier `hosts` de la machine n'était pas pris en compte sans que l'on redemarre le service.
-* Le script custom n'était pas compatble avec la commande `sed` de mac os.
+* Lors du redemarrage des containers, nous étions systématiquement obligés de redémarrer manuellement le proxy pour qu’il prenne en compte les nouvelles IP des containers. On utilisait bien des noms de domaines dans les vhosts de nginx, mais le fichier `hosts` de la machine n'était pas pris en compte sans que l'on redémarre le service.
+* Le script custom n'était pas compatible avec la commande `sed` de mac os.
 
 <img src="/images/docker-vagrant-2.svg">
 
@@ -125,10 +125,10 @@ Impossible de faire tourner en même temps le nginx que nous utilisions pour l�
 Face à ça, nous avons imaginé plusieurs solutions :
 
 * Faire tourner le container et le serveur nginx sur des ports différents...
-Le soucis étant que nos clients auraient eu des urls en *http://domain:81* par exemple, pas très pratique...
+Le souci étant que nos clients auraient eu des urls en *http://domain:81* par exemple, pas très pratique...
 
 * Obtenir une nouvelle IP auprès de notre hébergeur et utiliser une IP pour le nouveau proxy et une pour l'ancien.
-Le soucis étant que pour faciliter la procédure de mise en pré-production, tous les sous-domaines de .preprod.zol.fr pointent vers la même IP.
+Le souci étant que pour faciliter la procédure de mise en pré-production, tous les sous-domaines de .preprod.zol.fr pointent vers la même IP.
 Il aurait donc fallu soit avoir deux sous domaines *.preprod.zol.fr et *.preprod-new.zol.fr par exemple.
 Soit enregistrer manuellement les entrées DNS chez notre hoster. Pénible !
 
@@ -183,4 +183,4 @@ La configuration de Varnish permet de rediriger correctement vers Docker ou Vagr
 >> Nous aurions pu utiliser n'importe quel autre reverse proxy.
 
 Voilà, comment nous avons fait évoluer notre plate forme de pré-production au fil du temps,
-avec les différentes contraintes liés à l'utilisation de vagrant et docker sur une même machine.
+avec les différentes contraintes liées à l'utilisation de Vagrant et Docker sur une même machine.

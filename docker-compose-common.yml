@@ -4,3 +4,4 @@ web:
    - .:/app
   environment:
        VIRTUAL_HOST: blog.zol.dev
+       VISTUAL_PORT: 4000

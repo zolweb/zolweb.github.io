@@ -39,42 +39,31 @@ endif
 
 step=--------------------------------
 project=Blog ZOL
-compose=docker-compose
+projectCompose=blog-zol
+composeFile=docker-compose-$(PROJECT_ENV).yml
+compose = $(PROJECT_AS) docker-compose -f $(composeFile) -p $(projectCompose)
 
 all: help
 help:
 	@echo ""
 	@echo "-- Help Menu"
 	@echo ""
-	@echo "   1.  make requirements         	- Install requirements"
-	@echo "   2.  make install              	- Install $(project)"
-	@echo "   3.  make update               	- Update $(project)"
-	@echo "   4.  make start                	- Start $(project)"
-	@echo "   5.  make stop                 	- Stop $(project)"
-	@echo "   6.  make restart              	- Stop and start $(project)"
-	@echo "   7.  make state                	- Etat $(project)"
-	@echo "   8.  make bash                 	- Launch bash $(project)"
-	@echo "   9.  make blog				- Create a new blog for project $(project)"
+	@echo "   1.  make install              	- Install $(project)"
+	@echo "   2.  make update               	- Update $(project)"
+	@echo "   3.  make start                	- Start $(project)"
+	@echo "   4.  make stop                 	- Stop $(project)"
+	@echo "   5.  make restart              	- Stop and start $(project)"
+	@echo "   6.  make state                	- Etat $(project)"
+	@echo "   7.  make bash                 	- Launch bash $(project)"
+	@echo "   8.  make blog				- Create a new blog for project $(project)"
 	@echo ""
 
-
-# REQUIREMENT
-install-docker:
-	@echo "$(step) Installing docker $(step)"
-	@curl -sSL https://get.docker.com/ubuntu/ | sudo sh
-
-install-docker-compose:
-	@echo "$(step) Installing docker-compose $(step)"
-	@sudo bash -c "curl -L https://github.com/docker/compose/releases/download/1.2.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose"
-	@sudo chmod +x /usr/local/bin/docker-compose
-
-requirements: install-docker install-docker-compose
 
 build: remove
 	@echo "$(step) Building images docker $(step)"
 	@$(compose) build
 
-install: build bundle jkbuild start nginx-proxy
+install: build bundle jkbuild start
 
 bundle:
 	@echo "$(step) Bundler $(step)"
@@ -117,6 +106,8 @@ bash:
 	@$(compose) run --rm web bash
 
 nginx-proxy:
+	@echo "Removing NGINX REVERSE PROXY"
+	@$(shell docker rm -f reverseproxy > /dev/null 2> /dev/null || true)
 	@echo "Starting NGINX REVERSE PROXY"
-	@$(shell docker run -d -p 80:80 -v /var/run/docker.sock:/tmp/docker.sock jwilder/nginx-proxy > /dev/null 2> /dev/null || true)
+	@$(shell docker run -d -name reverseproxy -p 80:80 -v /var/run/docker.sock:/tmp/docker.sock jwilder/nginx-proxy > /dev/null 2> /dev/null || true)
 
