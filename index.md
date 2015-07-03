@@ -1,10 +1,7 @@
 ---
 layout: home
-excerpt: "A minimal Jekyll theme for your blog by designer Michael Rose."
-author: yannick_pereirareis
-tags: [Jekyll, theme, responsive, blog, template]
+excerpt: "ZOL, agence web sur Lyon, experte sur le framework Symfony, nous utilisons les méthodes agiles de type Scrum. Nous faisons également du développement AngularJs et ReactJs."
+tags: [ZOL, lyon, Lyon, Symfony, symfony, symfony 2, angular, AngularJs, Angular, scrum, agile,]
 image:
   feature: sample-image-1.jpg
-  credit: WeGraphics
-  creditlink: http://wegraphics.net/downloads/free-ultimate-blurred-background-pack/
 ---

@@ -1,9 +1,9 @@
 # Site wide configuration
 
-title:            Blog ZOL
+title:            ZOL - Le blog
 locale:           fr_FR
 url:
-url_prod: blog.zol.fr
+url_prod: http://blog.zol.fr
 
 # Jekyll configuration
 
@@ -28,7 +28,7 @@ kramdown:
 owner:
   name: Zol
   avatar: bio-photo.jpg
-  bio: "Développement Php et Symfony"
+  bio: "Agence web sur Lyon, experte sur le framework Symfony, nous utilisons les méthodes agiles de type Scrum. <br /><br />Nous faisons également du développement AngularJs et ReactJs."
   email: contact@zol.fr
   twitter: ZOL_Web
   github: zolweb
