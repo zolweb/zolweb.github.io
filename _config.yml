@@ -26,9 +26,9 @@ kramdown:
 
 # Site owner
 owner:
-  name: Zol
-  avatar: bio-photo.jpg
-  bio: "Agence web sur Lyon, experte sur le framework Symfony, nous utilisons les méthodes agiles de type Scrum. <br /><br />Nous faisons également du développement AngularJs et ReactJs."
+  name: ""
+  avatar: avatars/zol.png
+  bio: "Agence web sur Lyon, experte sur le framework Symfony, nous utilisons les méthodes agiles de type Scrum. <br /><br />Nous faisons également du développement AngularJs et ReactJs.<br /><br /> Nous mettons en oeuvre des process et outils de gestion de la qualité : tests unitaires et fonctionnels, intégration et déploiement continue, ..."
   email: contact@zol.fr
   twitter: ZOL_Web
   github: zolweb
