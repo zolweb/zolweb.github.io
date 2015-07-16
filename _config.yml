@@ -1,6 +1,6 @@
 # Site wide configuration
 
-title:            Le blog
+title:            ZOL - Le blog
 locale:           fr_FR
 url:
 url_prod: http://blog.zol.fr
