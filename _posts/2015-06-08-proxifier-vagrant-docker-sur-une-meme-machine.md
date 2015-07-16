@@ -6,7 +6,7 @@ excerpt: "Faire fonctionner ensemble des outils comme Vagrant, Nginx, VirtualBox
 tags: [docker, vagrant, nginx]
 comments: false
 image:
-  feature: proxifier-vagrant-docker-sur-une-meme-machine.jpg
+  feature: headers/proxifier-vagrant-docker-sur-une-meme-machine.jpg
 ---
 
 Nous avons été confronté à la problématique de la configuration de Nginx (en mode serveur web et reverse proxy), de Vagrant et de Docker

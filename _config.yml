@@ -1,6 +1,6 @@
 # Site wide configuration
 
-title:            ZOL - Le blog
+title:            Le blog
 locale:           fr_FR
 url:
 url_prod: http://blog.zol.fr
@@ -27,7 +27,7 @@ kramdown:
 # Site owner
 owner:
   name: ""
-  avatar: avatars/zol.png
+  avatar: "none"
   bio: "Agence web sur Lyon, experte sur le framework Symfony, nous utilisons les méthodes agiles de type Scrum. <br /><br />Nous faisons également du développement AngularJs et ReactJs.<br /><br /> Nous mettons en oeuvre des process et outils de gestion de la qualité : tests unitaires et fonctionnels, intégration et déploiement continue, ..."
   email: contact@zol.fr
   twitter: ZOL_Web

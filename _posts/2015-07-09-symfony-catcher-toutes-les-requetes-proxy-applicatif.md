@@ -5,10 +5,12 @@ author: yannick_pereirareis
 excerpt: "Lorsque l'on réalise une application, notamment lors du développement d'API ou avec l'utilisation de Framework Javascript, il arrive souvent que l'on soit obligé de réaliser un proxy à travers une application backend (pour éviter les erreurs CORS par exemple)"
 tags: [symfony, router, proxy, api]
 comments: false
+image:
+  feature: headers/symfony.png
 ---
 
 Les bonnes pratiques de développement et les architectures applicatives, notamment pour les applications web, évoluent en permanence.
-On trouve aujourd'hui énormément d'applications web dévelopées de la manière suivante :
+On trouve aujourd'hui énormément d'applications web développées de la manière suivante :
 
 * Une ou plusieurs applications BACK en mode API (rest) développées avec un langage de type Java, Php,...
 * Une application FRONT en mode client de l'API, développée en Javascript grâce à un framework de type AngularJs, Backbone,...
@@ -37,7 +39,7 @@ Il faudra également gérer la réponse afin de la retourner correctement au cli
 
 ## Mise en oeuvre avec Symfony
 
-Afin de catcher toutes les requêtes et de les rediriger vers une même action grâce à Symfony, il faut modifier le paramétrage par default du router.
+Afin de catcher toutes les requêtes et de les rediriger vers une même action grâce à Symfony, il faut modifier le paramétrage par défaut du router.
 En effet, par défaut, le caractère "/" est utilisé par Symfony comme séparateur des différentes parties d'une route.
 
 Ainsi, les requêtes suivantes devront matcher avec des routes Symfony :
@@ -65,7 +67,7 @@ _users_products_single:
 {% endhighlight %}
 
 Dans le cas d'un proxy, nous souhaitons rediriger **toutes** les requêtes vers la même action du même contrôleur.
-Il est ainsi nécessaire de dire à Symfony que le caractère "/" ne doit pas être traiter comme un séparateur :
+Il est ainsi nécessaire de dire à Symfony que le caractère "/" ne doit pas être traité comme un séparateur :
 
 {% highlight bash %}
 _proxy:
