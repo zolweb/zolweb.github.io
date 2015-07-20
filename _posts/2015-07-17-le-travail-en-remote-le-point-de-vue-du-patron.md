@@ -3,7 +3,7 @@ layout: post
 title: Le travail en remote, le point de vue du patron
 author: mathieu_molimard
 excerpt: "J'entends de plus en plus parler de travail en remote, c'est dans l'air du temps...Pendant très longtemps, cela n'était clairement pas envisageable pour une structure comme ZOL, tout simplement parce que nos outils de travail ne le permettaient pas"
-tags: [job ]
+tags: [job, remote, scrum]
 comments: false
 image:
   feature: headers/symfony.png
