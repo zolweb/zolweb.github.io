@@ -6,7 +6,7 @@ excerpt: "J'entends de plus en plus parler de travail en remote, c'est dans l'ai
 tags: [job, remote, scrum]
 comments: false
 image:
-  feature: headers/symfony.png
+  feature: headers/remotework.jpg
 ---
 
 J'entends de plus en plus parler de travail en remote, c'est dans l'air du temps...
