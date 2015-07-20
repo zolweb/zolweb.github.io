@@ -28,7 +28,7 @@ AUTHORIZE_HOME_DIR_COMMAND = chown -R $(CONTAINER_USERNAME):$(CONTAINER_GROUPNAM
 EXECUTE_AS = sudo -u $(CONTAINER_USERNAME) HOME=$(HOMEDIR)
 
 # If the first argument is one of the supported commands...
-SUPPORTED_COMMANDS := requirements install update start stop restart state bash jkbuild bundle
+SUPPORTED_COMMANDS := requirements install update up stop restart state bash jkbuild bundle
 SUPPORTS_MAKE_ARGS := $(findstring $(firstword $(MAKECMDGOALS)), $(SUPPORTED_COMMANDS))
 ifneq "$(SUPPORTS_MAKE_ARGS)" ""
   # use the rest as arguments for the command
@@ -63,7 +63,7 @@ build: remove
 	@echo "$(step) Building images docker $(step)"
 	@$(compose) build
 
-install: build bundle jkbuild start
+install: remove build bundle jkbuild up
 
 bundle:
 	@echo "$(step) Bundler $(step)"
