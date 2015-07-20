@@ -7,14 +7,14 @@ url_prod: http://blog.zol.fr
 
 # Jekyll configuration
 
-permalink:   /:categories/:title/
+permalink:   /:year/:month/:day/:categories/:title/
 markdown:    kramdown
 highlighter: pygments
 sass:
   sass_dir: _sass
   style: compressed
-#gems:
-#  - jekyll-sitemap
+gems:
+  - jekyll-sitemap
 
 kramdown:
   auto_ids: true

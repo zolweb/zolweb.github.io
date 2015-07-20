@@ -77,7 +77,7 @@ jkbuild:
 	@$(compose) run --rm web bash -ci '\
 		$(CREATE_USER_COMMAND) \
 		$(AUTHORIZE_HOME_DIR_COMMAND) \
-		$(EXECUTE_AS) jekyll build $(COMMAND_ARGS)'
+		$(EXECUTE_AS) bundle exec jekyll build $(COMMAND_ARGS)'
 
 update: install
 
@@ -85,13 +85,11 @@ up:
 	@echo "$(step) Starting $(project) $(step)"
 	@$(compose) up -d web
 
-start: up
-
 stop:
 	@echo "$(step) Stopping $(project) $(step)"
 	@$(compose) stop
 
-restart: stop start
+restart: stop up
 
 state:
 	@echo "$(step) Etat $(project) $(step)"
