@@ -3,7 +3,7 @@
 title:            ZOL - Le blog
 locale:           fr_FR
 url:
-url_prod: http://blog.zol.fr
+url_prod:         http://blog.zol.fr
 
 # Jekyll configuration
 
