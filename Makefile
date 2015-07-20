@@ -28,7 +28,7 @@ AUTHORIZE_HOME_DIR_COMMAND = chown -R $(CONTAINER_USERNAME):$(CONTAINER_GROUPNAM
 EXECUTE_AS = sudo -u $(CONTAINER_USERNAME) HOME=$(HOMEDIR)
 
 # If the first argument is one of the supported commands...
-SUPPORTED_COMMANDS := requirements install update start stop restart state bash jkbuild bundle
+SUPPORTED_COMMANDS := requirements install update up stop restart state bash jkbuild bundle
 SUPPORTS_MAKE_ARGS := $(findstring $(firstword $(MAKECMDGOALS)), $(SUPPORTED_COMMANDS))
 ifneq "$(SUPPORTS_MAKE_ARGS)" ""
   # use the rest as arguments for the command
@@ -63,7 +63,7 @@ build: remove
 	@echo "$(step) Building images docker $(step)"
 	@$(compose) build
 
-install: build bundle jkbuild start
+install: remove build bundle jkbuild up
 
 bundle:
 	@echo "$(step) Bundler $(step)"
@@ -77,7 +77,7 @@ jkbuild:
 	@$(compose) run --rm web bash -ci '\
 		$(CREATE_USER_COMMAND) \
 		$(AUTHORIZE_HOME_DIR_COMMAND) \
-		$(EXECUTE_AS) jekyll build $(COMMAND_ARGS)'
+		$(EXECUTE_AS) bundle exec jekyll build $(COMMAND_ARGS)'
 
 update: install
 
@@ -85,13 +85,11 @@ up:
 	@echo "$(step) Starting $(project) $(step)"
 	@$(compose) up -d web
 
-start: up
-
 stop:
 	@echo "$(step) Stopping $(project) $(step)"
 	@$(compose) stop
 
-restart: stop start
+restart: stop up
 
 state:
 	@echo "$(step) Etat $(project) $(step)"
