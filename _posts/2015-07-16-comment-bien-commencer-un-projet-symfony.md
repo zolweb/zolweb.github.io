@@ -103,7 +103,7 @@ Pensez à bien ajouter une contrainte d'unicité sur la clé composée de réfé
 
 Vous faites des requêtes ou des jointures sur des colonnes particulières de vos tables... Pensez aux indexes.
 
-**EAV**
+**EAV (Entity-Attribute-Value)**
 
 Dans certain cas, une modélisation de type EAV (Entity-Attribute-Value) peut rendre bien des services.
 
