@@ -13,6 +13,15 @@ Lorsqu'on débute un nouveau projet Symfony il est important de penser à diffé
 Certaines de ces choses simplifient les développements, d'autres les tests, d'autres encore les process de déploiement ou mise en production.
 Voici donc une liste de recommandations que vous pouvez suivre... ou pas.
 
+* [Général](#gnral)
+* [Base de données](#base-de-donnes)
+* [Backend](#backend)
+* [Frontend](#frontend)
+* [Gestion de la qualité](#gestion-de-la-qualit)
+* [Quelques bundles incontournables](#quelques-bundles-incontournables)
+
+
+
 ## Général
 
 **Tout en Anglais**
@@ -105,52 +114,183 @@ Afin d'éviter une collision entre différents modules ou bundles utilisant des 
 
 ## Backend
 
-* Use a great ENUM lib
-* Never inject whole Container
-* DDD ? CQRS ? EventSourcing ?
-* Try to write all your configs with the same format (yml, xml, php, annotations)
-* Use IoC when possible !
-* Never use built-in doctrine shortcut (find, findOneBy, findAll...) => LAZY LOADING
-* No form definition inside controllers (very dificult to mock)
-* No doctrine query inside controllers (very difficult to mock)
-* Write your own session management class
-* Write your own logger class
-* Always thinks about maintenance mode
-* Always think about dev/prod fixtures
-* Think about Custom domain exceptions
-* Think about global Exception listener
-* Use ParamConverters correctly
-* Always check data server-side
-* Separate concerns as much as you can
-* Bind a model to a form
-* Event subscribers and Listeners can become evil !!!!
-* Use Doctrine Behaviors and traits
+**Les constantes/enum**
+
+La gestion des constantes de classe est souvent mal faite, un peu bancale et limite les possiblités offertes par le langage (typage par exemple).
+L'utilisation d'une librairie dédiée à la gestion des constantes/enum s'avère très utile [https://github.com/myclabs/php-enum](https://github.com/myclabs/php-enum)
+
+
+**Service container**
+
+Si vous pouvez éviter d'injecter tout le container Symfony dans vos service, faites le !
+Cela augmentera la réutilisabilité de vos classes et services et permettra de les tester plus facilement.
+Pensez à l'utilisation des interfaces.
+
+**DDD / CQRS / Event Sourcing**
+
+Votre application est grosses, complexe, très specifique ou contient enormément de règles métier.
+Pourquoi ne pas envisager l'utilisation de concepts comme :
+
+* DDD (Domain Driver Design)
+* CQRS (Command Query Responsibility Seggregation)
+* Event Sourcing
+
+**Configurations**
+
+Afin d'éviter de perdre **enormément** de temps à navigauer entre votre code et vos fichiers de configuration,
+à chercher la syntaxe correcte pour les configuration en PHP, en XML ou en JSON, à répercuter des modifications dans de nombreux fichiers de configurations,... je vous recommande :
+
+* L'utilisation d'un seul et unique format de configuration, le YAML (qui est très répendu)
+* L'utilisation des annotations pour :
+    * le mapping ORM/ODM des entités
+    * la configuration des repositories
+    * la gestion des contraintes des attributs des entités
+    * la gestion de la serialisation
+    * la définition et l'injection de services (alias de services)
+
+Certains diront qu'avec les annotations, on couple fortement notre code au Framework... **oui !** et alors ?
+
+Je ne recommande cependant pas l'utilisation des annotations pour le codage de règles métiers.
+
+
+**Find / FindBy / FindOneBy**
+
+Attention à l'utilisation de ces méthodes magiques proposées nativement par Symfony et Doctrine.
+En effet, il est primordial d'être conscient du fait que l'on peut se retrouver avec de gros problèmes de performances en utilisant ces méthodes
+si on ne fait pas attention notamment au Lazy Loading.
+
+**Formulaires**
+
+Ne jamais définir et configurer un formulaire dans un controller.
+Si vous le faites vous serrez confronté à différents problèmes :
+
+* Un code très lourd dans le contrôleur.
+* Un formulaire impossible à réutiliser.
+* Un formulaire compliqué à tester et à mocker.
+
+Dans l'idéal, il vaut mieux lier un modèle/une classe à un formulaire.
+Cela permet de manipuler un objet ensuite.
+
+**DQL / Repositoriers**
+
+Ne jamais écrire de DQL ou de requêtes SQL directement dans un contrôleur.
+Si vous le faites vous serrez confronté à différents problèmes :
+
+* Un code très lourd dans le contrôleur.
+* Une requête impossible à réutiliser.
+* Une requête impossible à tester / mocker.
+
+**Session**
+
+Il peut être intéressant de ne pas utiliser directement le service `session`, mais de l'utiliser à travers un service custom.
+Cela permet un niveau d'abstraction supplémentaire et permet d'ajouter potentiellement des traitements lors de la sauvegarde
+ou la récupération de données en session :
+
+* Serialisation / désérialisation de données complexes.
+* Log d'information.
+* Gestion unifiée des identifiants des données stockées en session.
+
+**Logs / Logger**
+
+Comme pour la session il peut être pertinent d'avoir son propre service de log.
+Cela peut notamment permettre d'avoir facilement des logger custom implémentant tous la même interface :
+
+* Log dans des fichiers (monolog).
+* Log en BDD.
+* Aucun log (les méthodes error, warn, ... ne font rien).
+* Log dans la console.
+
+**Maintenance applicative**
+
+Lors de la mise à jour d'une application en PROD, il faut prévenir et les utilisateurs et bloqué l'application en présentant un message clair.
+
+**Dev / Prod**
+
+En dev et en prod les données utilisées ne sont pas (et ne doivent pas être) les mêmes.
+Pensez aux fixtures en dev, et aux données minimales de fonctionnement en prod (liste d'utilisateurs, référentiels,...)
+
+**Exceptions**
+
+Dans de nombreux projets on retrouve un seul type de levée d'exception : `new \Exception('Raoul')`.
+Cela ne permet pas de gérer et différencier facilement les exceptions. Il peut être bien de définir des exceptions custom
+liées au métier, aux fonctionnalités, à un bundle,...:
+
+* InactiveUserException()
+* InvalidCsvFormatException()
+* BadEmailFormatException()
+
+Pourquoi pas un listner d'exception global ??
+
+
+**Validation des données coté serveur**
+
+Rien à dire de plus...
+
+
+**Listeners / Subscribers**
+
+Attention aux listenrs et Subscribers. Ils permettent de faire de nombreux traitements intéressants.
+Cependant, ils peuvent poser des problèmes parfois, notamment les listeners Doctrine.
+Il faut bien être conscient de quand et pourquoi ces listeners sont être appélés, et plus important encore,
+il faut savoir quand et comment les désactiver. Imaginez une migration de base de données qui met à jour
+la date de modification de centaines d'entités. Si vous avez un `postLoad` listener sur cette entité vous pouvez avoir de gros problèmes.
+
+**Timestampable / Translatable / Sluggable**
+
+Rien à dire de plus... pensez-y !
 
 ## Frontend
 
-* Use grunt/gulp to manage assets
-* Alaways use a css compiler (less/sass)
-* Write clean Javascript with module, organisation even if no framework used.
-* Expose the routing through your Javascript
-* Use a Responsive CSS Framework
+**Assetic / Grunt / Gulp**
+
+Assetic est beaucoup moins pratique à mettre en place et utiliser que des solutions comme Grunt ou Gulp.
+Je vous recommande d'utiliser `grunt` ou `gulp` couplé aux module `npm` qui vont bien.
+Pensez aussi à `bower` pour la gestion des dépendances et libs.
+
+**CSS**
+
+Un framework CSS responsive (bootstrap, Foundation, ...) !!!
+Pensez aux différents points de ruptures, testez sur différents supports !
+
+**Less / Sass**
+
+Quel que soit le pré-processeur ou compilateur css, c'est selon moi indispensable.
+
+**Javascript**
+
+Si vous n'utilisez pas de Framework de type AngularJs, Ember, Backbone,... pensez tout de même à écire du Javascript propre et modulaires.
+Le code Javascript en vrac et sans organisation, c'est fini (et interdit)
+
+**Routes**
+
+Si vous utilisez Twig comme moteur de template front, et que votre code contient des appels Ajax, pensez à la gestion des routes en Javascript.
+Pourquoi ne aps avoir un router Javascript ?
+
 
 ## Gestion de la qualité
 
-* Less than 30 lines inside actions
-* NEVER write business logic inside views (handlebars, mustache)
-* Even if you do not make an API, think like if it is !
-* Always include unit and functionnal tests libs (phpunit, atoum, phpspec, behat,...)
-* PHPDoc (only useful doc)
-* Write useful comments !
-* Jenkins / GitlabCI, CircleCI
-* Code review
+Voici quelques idées qui pourront vous permettre d'augmenter la qualité de votre code et de vos projets :
+
+* Un contrôleur ne doit pas contenir plus de 50 lignes de codes.
+* On ne doit jamais retrouver de règles métiers dans des templates.
+   * Les règles ne sont pas réutilisables.
+   * Les règles ne sont pas testables unitairement.
+   * Les templates deviennent très sales.
+* Utilisez des "Décorateurs" pour formatter correctement les données à transmettre aux vues.
+* Mettez en place des libs de tests unitaires back (atoum/phpunit) et front (jasmine/karma...)
+* Mettez en place une lib de tests fonctionnels (behat, protractor,...)
+* De la PHPDoc et des commentaires **utiles** (expliquez pourquoi à on a besoin de ce bout de code, et non pas ce qu'il fait)
+* Intégration continue (Jenkins, GitlabCI, CircleCI,...)
+* Pair Programing
+* Revue de code sur PR/MR
 
 ## Quelques bundles incontournables
 
 * **FOSUserBundle** pour la gestion de compte utilisateurs, droits, groupes,...
-* **FOSRestBundle** pour la mise en place d'API Rest
+* **FOSRestBundle** pour la mise en place d'API Rest.
+* **SyliusResourceBundle** qui permet d’exposer sous la forme d’une API REST des entités Doctrine.
 * **JMSSerializerBundle** pour la gestion de la sérialization d'objets
-* **JMSDiExtraBundle** pour une gestion simplifier de nombreuses configurations
-* **JMSAopBundle** pour mettre en place de la programmation orientée aspect (comme son nom l'indique)
-* **HautelookAliceBundle** pour gérer facilement les données minimales de vos projets
-* **DoctrineMigrationsBundle** pour la gestion des migrations de BDD (une fois le projet en prod)
+* **JMSDiExtraBundle** pour une gestion simplifier de nombreuses configurations.
+* **JMSAopBundle** pour mettre en place de la programmation orientée aspect (comme son nom l'indique).
+* **HautelookAliceBundle** pour gérer facilement les données minimales de vos projets.
+* **DoctrineMigrationsBundle** pour la gestion des migrations de BDD (une fois le projet en prod).
