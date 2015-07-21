@@ -3,7 +3,7 @@ layout: post
 title: Comment bien commencer un projet Symfony
 author: yannick_pereirareis
 excerpt: "Lors de la création d'un nouveau projet, et notamment un projet Symfony, il est nécessaire de penser à un certain nombre de choses très importantes à mettre en place ou configurer. Nous allons en détailler certaines ici."
-tags: [symfony, router, proxy, api]
+tags: [symfony, recommandations, bundles]
 comments: false
 image:
   feature: headers/symfony.png
@@ -19,8 +19,6 @@ Voici donc une liste de recommandations que vous pouvez suivre... ou pas.
 * [Frontend](#frontend)
 * [Gestion de la qualité](#gestion-de-la-qualit)
 * [Quelques bundles incontournables](#quelques-bundles-incontournables)
-
-
 
 ## Général
 
@@ -67,7 +65,7 @@ Des normes, des formats, des règles pour les nom de fichers, nom de variables, 
 
 Une solution à base de VirtualBox/Vagrant ou container docker s'avère très utile lorsqu'il s'agit de partager des envorinnement de dev.
 
-**PSR-2, norme, gui de style**
+**PSR-2, norme, guide de style**
 
 Rien de plus à dire
 
@@ -75,7 +73,6 @@ Rien de plus à dire
 
 Pour optimiser les perfs de votre application Symfony avec Vagrant, modifier la configuration par défaut des répertoires `app/cache` et `app/logs`.
 Ecrire dans les répertoires partagé depuis la VM est parfois très lent. Pensez plutôt au `/dev/shm` si possible.
-
 
 ## Base de données
 
@@ -110,7 +107,6 @@ Dans certain cas, une modélisation de type EAV (Entity-Attribute-Value) peut re
 **Des préfixes pour les tables**
 
 Afin d'éviter une collision entre différents modules ou bundles utilisant des tables en BDD, préfixez toujours vos tables correctement.
-
 
 ## Backend
 
