@@ -32,6 +32,9 @@ owner:
   email: bonjour@zol.fr
   twitter: ZOL_Web
   github: zolweb
+  website: http://www.zol.fr
+  google:
+    analytics: UA-1934248-11
 
 
 include: [".htaccess", "_sass/vendor"]

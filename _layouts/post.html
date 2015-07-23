@@ -56,7 +56,9 @@
 
 <div class="footer-wrap">
   <div class="related-articles">
-  <h4>Vous pourriez aussi aimer <small class="pull-right">(<a href="{{ site.url }}/posts/">Voir tous les articles</a>)</small></h4>
+  <h4>Vous pourriez aussi aimer
+      <!--<small class="pull-right">(<a href="{{ site.url }}/posts/">Voir tous les articles</a>)</small>-->
+  </h4>
     <ul>
     {% for post in site.related_posts limit:3 %}
       <li><a href="{{ site.url }}{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a></li>
