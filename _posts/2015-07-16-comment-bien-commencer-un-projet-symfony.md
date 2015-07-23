@@ -260,7 +260,7 @@ Le code Javascript en vrac et sans organisation, c'est fini (et interdit).
 **Routes**
 
 Si vous utilisez Twig comme moteur de template front, et que votre code contient des appels Ajax, pensez à la gestion des routes en Javascript.
-Pourquoi ne pas avoir un router Javascript ? Vous pouvez aller faire un tour sur <a href='https://github.com/FriendsOfSymfony/FOSJsRoutingBundle' target='_blank'>https://github.com/FriendsOfSymfony/FOSJsRoutingBundle</a>).
+Pourquoi ne pas avoir un router Javascript ? Vous pouvez aller faire un tour sur <a href='https://github.com/FriendsOfSymfony/FOSJsRoutingBundle' target='_blank'>https://github.com/FriendsOfSymfony/FOSJsRoutingBundle</a>.
 
 
 ## Gestion de la qualité
