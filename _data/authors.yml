@@ -1,0 +1,29 @@
+# Authors
+yannick_pereirareis:
+  name: Yannick Pereira-Reis
+  web: http://ypereirareis.github.io
+  bio: 'Développeur Php/Symfony et AngularJs chez ZOL, je suis également Scrum Master et très intéressé par les sujets DevOps. <br /> <br />Je me déplace souvent en trottinette !'
+  avatar: avatars/yannick_pereirareis.jpg
+  twitter: yannickpr69
+  github: ypereirareis
+  linkedin: yannickpereirareis
+mathieu_molimard:
+  name: Mathieu Molimard
+  web: http://www.zol.fr
+  bio: 'Fondateur de Zol'
+  avatar: avatars/mathieu_molimard.jpg
+  twitter: mathieuZOL
+  github: zolweb
+  linkedin: mathieu-molimard
+thomas_blanchet:
+  name: Thomas Blanchet
+  avatar: avatars/thomas_blanchet.jpg
+morgan_brunot:
+  name: Morgan Brunot
+  web: http://oziks.fr
+  bio: 'Développeur web ReactJs et Symfony à Lyon, je suis actuellement lead développeur chez ZOL, en mission depuis plusieurs mois chez M6Web.'
+  avatar: avatars/morgan_brunot.jpg
+  twitter: oziks
+  github: oziks
+  linkedin: morganbrunot
+

@@ -1,0 +1,6 @@
+web:
+    extends:
+        file: docker-compose-common.yml
+        service: web
+    environment:
+        VIRTUAL_HOST: blog.preprod.zol.fr

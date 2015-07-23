@@ -1,0 +1,41 @@
+# Site wide configuration
+
+title:            ZOL - Le blog
+locale:           fr_FR
+url:
+url_prod:         http://blog.zol.fr
+
+# Jekyll configuration
+
+permalink:   /:year/:month/:day/:categories/:title/
+markdown:    kramdown
+highlighter: pygments
+sass:
+  sass_dir: _sass
+  style: compressed
+gems:
+  - jekyll-sitemap
+
+kramdown:
+  auto_ids: true
+  footnote_nr: 1
+  entity_output: as_char
+  toc_levels: 1..6
+  use_coderay: false
+
+
+# Site owner
+owner:
+  name: ""
+  avatar: "none"
+  bio: "Agence web sur Lyon, experte sur le framework Symfony, nous utilisons les méthodes agiles de type Scrum. <br /><br />Nous faisons également du développement AngularJs et ReactJs.<br /><br /> Nous mettons en oeuvre des process et outils de gestion de la qualité : tests unitaires et fonctionnels, intégration et déploiement continue, ..."
+  email: bonjour@zol.fr
+  twitter: ZOL_Web
+  github: zolweb
+  website: http://www.zol.fr
+  google:
+    analytics: UA-1934248-11
+
+
+include: [".htaccess", "_sass/vendor"]
+exclude: ["vendor", "lib", "config.rb", "Capfile", "config", "log", "Rakefile", "Rakefile.rb", "tmp", "less", "*.sublime-project", "*.sublime-workspace", "test", "spec", "Gruntfile.js", "package.json", "node_modules", "Gemfile", "Gemfile.lock", "LICENSE", "README.md"]
