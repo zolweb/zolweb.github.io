@@ -9,8 +9,8 @@ image:
   feature: headers/symfony.png
 ---
 
-Lorsqu'on débute un nouveau projet Symfony il est important de penser à différentes choses **dès le début** du projet.
-Certaines de ces choses simplifient les développements, d'autres les tests, d'autres encore les process de déploiement ou mise en production.
+Lorsqu'on débute un nouveau projet Symfony il est important de respecter un ensemble de choses **dès le début** du projet.
+Certaines simplifient les développements, d'autres les tests, d'autres encore les process de déploiement ou mise en production.
 Voici donc une liste de recommandations que vous pouvez suivre... ou pas.
 
 * [Général](#gnral)
@@ -35,8 +35,8 @@ il faut mettre en place ce mécanismes de gestion et centralisation des traducti
 **Utiliser des variables d'environnements pour les configurations dépendantes de la plate forme**
 
 Certaines configurations, mots de passe, clé de chiffrement sont spécifiques par environnement.
-Il ne faut surtout pas les commiter. Il ne faut certainement pas non plus divulguer des informations de prod aux dev.
-Utilisez donc les variables d'environnements pour définir ces configurations.
+Il ne faut surtout pas les commiter. Il ne faut certainement pas non plus divulguer des informations de prod aux développeurs.
+Utilisez des variables d'environnements pour définir ces configurations.
 
 **Commande `composer update` interdite**
 
@@ -54,46 +54,46 @@ Un hook peut aussi permettre de lancer les tests avant de faire le commit et le 
 
 **Version précise pour les dépendances**
 
-Votre application fonctionne avec certaines dépendances. Elle ne fonctionnera peut-être plus avec une version postérieur.
-Attention à bien spécifier les versions de vos dépendances (semver)
+Votre application fonctionne avec certaines dépendances. Elle ne fonctionnera peut-être plus avec une version postérieure.
+Attention à bien spécifier les versions de vos dépendances (<a href='http://semver.org/' target='_blank'>semver</a>)
 
 **Définir des formats**
 
-Des normes, des formats, des règles pour les nom de fichers, nom de variables, clés de traductions...
+Des normes, des formats, des règles pour les noms de fichers, nom de variables, clés de traductions...
 
 **Industrialisation des environnements de dev**
 
-Une solution à base de VirtualBox/Vagrant ou container docker s'avère très utile lorsqu'il s'agit de partager des envorinnement de dev.
+Une solution à base de VirtualBox/Vagrant ou container docker s'avère très utile lorsqu'il s'agit de partager des environnements avec d'autres développeurs, ou sur plusieurs plateformes.
 
 **PSR-2, norme, guide de style**
 
-Rien de plus à dire
+Rien à dire de plus
 
 **Cache et logs avec Vagrant**
 
 Pour optimiser les perfs de votre application Symfony avec Vagrant, modifier la configuration par défaut des répertoires `app/cache` et `app/logs`.
-Ecrire dans les répertoires partagé depuis la VM est parfois très lent. Pensez plutôt au `/dev/shm` si possible.
+Ecrire dans les répertoires partagés depuis la VM est parfois très lent. Pensez à utiliser plutôt au `/dev/shm` si possible.
 
 ## Base de données
 
 **Migrations**
 
 Lors de la mise à jour d'une application en prod, il est courant de devoir modifier le schéma de la base de donnée.
-Il est vivement recommandé de penser à la gestion des migrations !
+Il est vivement recommandé de penser à la gestion des migrations et ce depuis le début du projet !
 
 **Recherche avancée**
 
-Vous devez mettre en place un module de recherche avancé, une recherche tolérente aux fautes d'orthographes, faire des statistiques sur vos données, ... ?
-Pensez à Elastic (Elasticsearch).
+Vous devez mettre en place un module de recherche avancée, une recherche tolérente aux fautes d'orthographes, faire des statistiques sur vos données, ... ?
+Pensez à <a href='https://www.elastic.co/' target='_blank'>Elasticsearch]</a>.
 
 **Sauvegarde**
 
-Avant de rencontrer des problèmes, mettez en place un mécanismes de sauvegarde de votre BDD.
-Encore plus important, il faut vérifier que les backup fonctionnent en essayant de remonter un projet à aprtir d'un backup.
+Avant de rencontrer des problèmes, mettez en place un mécanisme de sauvegarde de votre BDD.
+Encore plus important, il faut vérifier que les backups fonctionnent en essayant de remonter un projet à partir d'un backup (très simple si vous utilisez docker).
 
 **Doctrine et les clé primaires**
 
-Si vous voulez minimiser les problèmes potentiels avec l'utilisation de doctrine, utiliser systématiquement des clés primaires simples au format `INT`.
+Si vous voulez minimiser les problèmes avec l'utilisation de doctrine, utiliser systématiquement des clés primaires simples au format `INT`.
 Pensez à bien ajouter une contrainte d'unicité sur la clé composée de référence vers d'autres tables.
 
 **Les indexes**
@@ -102,7 +102,7 @@ Vous faites des requêtes ou des jointures sur des colonnes particulières de vo
 
 **EAV (Entity-Attribute-Value)**
 
-Dans certain cas, une modélisation de type EAV (Entity-Attribute-Value) peut rendre bien des services.
+Dans certains cas, une modélisation de type EAV (Entity-Attribute-Value) peut rendre bien des services. <a href='https://en.wikipedia.org/wiki/Entity–attribute–value_model' target='_blank'>EAV</a>
 
 **Des préfixes pour les tables**
 
@@ -113,30 +113,30 @@ Afin d'éviter une collision entre différents modules ou bundles utilisant des 
 **Les constantes/enum**
 
 La gestion des constantes de classe est souvent mal faite, un peu bancale et limite les possiblités offertes par le langage (typage par exemple).
-L'utilisation d'une librairie dédiée à la gestion des constantes/enum s'avère très utile [https://github.com/myclabs/php-enum](https://github.com/myclabs/php-enum)
+L'utilisation d'une librairie dédiée à la gestion des constantes/enum s'avère très utile <a href='https://github.com/myclabs/php-enum' target='_blank'>https://github.com/myclabs/php-enum</a>
 
 
 **Service container**
 
-Si vous pouvez éviter d'injecter tout le container Symfony dans vos service, faites le !
+Si vous pouvez éviter d'injecter tout le container Symfony dans vos services, faites-le !
 Cela augmentera la réutilisabilité de vos classes et services et permettra de les tester plus facilement.
 Pensez à l'utilisation des interfaces.
 
 **DDD / CQRS / Event Sourcing**
 
-Votre application est grosses, complexe, très specifique ou contient enormément de règles métier.
+Votre application est grosse, complexe, très specifique ou contient enormément de règles métier.
 Pourquoi ne pas envisager l'utilisation de concepts comme :
 
-* DDD (Domain Driver Design)
-* CQRS (Command Query Responsibility Seggregation)
+* DDD <a href='https://en.wikipedia.org/wiki/Domain-driven_design' target='_blank'>Domain Driver Design</a>
+* CQRS <a href='https://en.wikipedia.org/wiki/Command_query_separation' target='_blank'>Command Query Responsibility Seggregation</a>
 * Event Sourcing
 
 **Configurations**
 
-Afin d'éviter de perdre **enormément** de temps à navigauer entre votre code et vos fichiers de configuration,
+Afin d'éviter de perdre **enormément** de temps à naviguer entre votre code et vos fichiers de configuration,
 à chercher la syntaxe correcte pour les configuration en PHP, en XML ou en JSON, à répercuter des modifications dans de nombreux fichiers de configurations,... je vous recommande :
 
-* L'utilisation d'un seul et unique format de configuration, le YAML (qui est très répendu)
+* L'utilisation d'un seul et unique format de configuration, le YAML (qui est très répandu)
 * L'utilisation des annotations pour :
     * le mapping ORM/ODM des entités
     * la configuration des repositories
@@ -153,12 +153,12 @@ Je ne recommande cependant pas l'utilisation des annotations pour le codage de r
 
 Attention à l'utilisation de ces méthodes magiques proposées nativement par Symfony et Doctrine.
 En effet, il est primordial d'être conscient du fait que l'on peut se retrouver avec de gros problèmes de performances en utilisant ces méthodes
-si on ne fait pas attention notamment au Lazy Loading.
+si on ne fait pas attention notamment au <a href='https://en.wikipedia.org/wiki/Lazy_loading' target='_blank'>Lazy Loading</a>.
 
 **Formulaires**
 
 Ne jamais définir et configurer un formulaire dans un controller.
-Si vous le faites vous serrez confronté à différents problèmes :
+Si vous le faites vous serez confronté à différents problèmes :
 
 * Un code très lourd dans le contrôleur.
 * Un formulaire impossible à réutiliser.
@@ -167,10 +167,10 @@ Si vous le faites vous serrez confronté à différents problèmes :
 Dans l'idéal, il vaut mieux lier un modèle/une classe à un formulaire.
 Cela permet de manipuler un objet ensuite.
 
-**DQL / Repositoriers**
+**DQL / Repositories**
 
 Ne jamais écrire de DQL ou de requêtes SQL directement dans un contrôleur.
-Si vous le faites vous serrez confronté à différents problèmes :
+Si vous le faites vous serez confronté à différents problèmes :
 
 * Un code très lourd dans le contrôleur.
 * Une requête impossible à réutiliser.
@@ -198,7 +198,7 @@ Cela peut notamment permettre d'avoir facilement des logger custom implémentant
 
 **Maintenance applicative**
 
-Lors de la mise à jour d'une application en PROD, il faut prévenir et les utilisateurs et bloqué l'application en présentant un message clair.
+Lors de la mise à jour d'une application en PROD, il faut prévenir et les utilisateurs et bloquer l'application en présentant un message clair.
 
 **Dev / Prod**
 
@@ -215,7 +215,7 @@ liées au métier, aux fonctionnalités, à un bundle,...:
 * InvalidCsvFormatException()
 * BadEmailFormatException()
 
-Pourquoi pas un listner d'exception global ??
+Pourquoi pas un listener d'exception global ??
 
 
 **Validation des données coté serveur**
@@ -225,9 +225,9 @@ Rien à dire de plus...
 
 **Listeners / Subscribers**
 
-Attention aux listenrs et Subscribers. Ils permettent de faire de nombreux traitements intéressants.
+Attention aux listeners et Subscribers. Ils permettent de faire de nombreux traitements intéressants.
 Cependant, ils peuvent poser des problèmes parfois, notamment les listeners Doctrine.
-Il faut bien être conscient de quand et pourquoi ces listeners sont être appélés, et plus important encore,
+Il faut bien être conscient de quand et pourquoi ces listeners sont être appelés, et plus important encore,
 il faut savoir quand et comment les désactiver. Imaginez une migration de base de données qui met à jour
 la date de modification de centaines d'entités. Si vous avez un `postLoad` listener sur cette entité vous pouvez avoir de gros problèmes.
 
@@ -239,8 +239,8 @@ Rien à dire de plus... pensez-y !
 
 **Assetic / Grunt / Gulp**
 
-Assetic est beaucoup moins pratique à mettre en place et utiliser que des solutions comme Grunt ou Gulp.
-Je vous recommande d'utiliser `grunt` ou `gulp` couplé aux module `npm` qui vont bien.
+Assetic est beaucoup moins pratique à mettre en place et à utiliser que des solutions comme Grunt ou Gulp.
+Je vous recommande d'utiliser `grunt` ou `gulp` couplé aux modules `npm` qui vont bien.
 Pensez aussi à `bower` pour la gestion des dépendances et libs.
 
 **CSS**
@@ -254,20 +254,20 @@ Quel que soit le pré-processeur ou compilateur css, c'est selon moi indispensab
 
 **Javascript**
 
-Si vous n'utilisez pas de Framework de type AngularJs, Ember, Backbone,... pensez tout de même à écire du Javascript propre et modulaires.
-Le code Javascript en vrac et sans organisation, c'est fini (et interdit)
+Si vous n'utilisez pas de Framework de type AngularJs, Ember.js, Backbone.js,... pensez tout de même à écrire du Javascript propre et modulaires.
+Le code Javascript en vrac et sans organisation, c'est fini (et interdit).
 
 **Routes**
 
 Si vous utilisez Twig comme moteur de template front, et que votre code contient des appels Ajax, pensez à la gestion des routes en Javascript.
-Pourquoi ne aps avoir un router Javascript ?
+Pourquoi ne pas avoir un router Javascript ? Vous pouvez aller faire un tour sur <a href='https://github.com/FriendsOfSymfony/FOSJsRoutingBundle' target='_blank'>https://github.com/FriendsOfSymfony/FOSJsRoutingBundle</a>).
 
 
 ## Gestion de la qualité
 
 Voici quelques idées qui pourront vous permettre d'augmenter la qualité de votre code et de vos projets :
 
-* Un contrôleur ne doit pas contenir plus de 50 lignes de codes.
+* Un contrôleur ne doit pas contenir plus de 50 lignes de code.
 * On ne doit jamais retrouver de règles métiers dans des templates.
    * Les règles ne sont pas réutilisables.
    * Les règles ne sont pas testables unitairement.
@@ -282,7 +282,7 @@ Voici quelques idées qui pourront vous permettre d'augmenter la qualité de vot
 
 ## Quelques bundles incontournables
 
-* **FOSUserBundle** pour la gestion de compte utilisateurs, droits, groupes,...
+* **(FOSUserBundle** pour la gestion de compte utilisateurs, droits, groupes,...
 * **FOSRestBundle** pour la mise en place d'API Rest.
 * **SyliusResourceBundle** qui permet d’exposer sous la forme d’une API REST des entités Doctrine.
 * **JMSSerializerBundle** pour la gestion de la sérialization d'objets
