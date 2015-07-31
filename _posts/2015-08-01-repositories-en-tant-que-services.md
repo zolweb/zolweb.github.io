@@ -1,8 +1,8 @@
 ---
 layout: post
-title: 
+title: Repositories en tant que services
 author: mathieu_tuaillon
-excerpt: ""
+excerpt: "Déclarer ses repositories en tant que services afin de les injecter permet d'obtenir un code plus clair et plus simple à tester."
 tags: [symfony, doctrine, design]
 comments: false
 image:
