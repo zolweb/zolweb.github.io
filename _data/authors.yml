@@ -27,4 +27,10 @@ morgan_brunot:
   twitter: oziks
   github: oziks
   linkedin: morganbrunot
-
+mathieu_tuaillon:
+  name: Mathieu Tuaillon
+  bio: 'Développeur PHP/Symfony chez ZOL'
+  avatar: avatars/mathieu_tuaillon.png
+  twitter: mtuaillo
+  github: maat8
+  linkedin: mathieutuaillon
