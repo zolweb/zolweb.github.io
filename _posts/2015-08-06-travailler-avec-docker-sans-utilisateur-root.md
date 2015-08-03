@@ -3,7 +3,7 @@ layout: post
 title: Docker sans utilisateur root sur l'hôte et dans les containers
 author: yannick_pereirareis
 excerpt: "Lorsqu'on travaille avec Docker, par défaut tout se fait en root : installation, lancement de commandes depuis l'hôte et lancement de commandes dans les containers. Mais ce comportement peut être modifié grâce à quelques configurations et lignes de commandes."
-tags: [docker, user, utilisateur, root, container]
+tags: [yannick pereira-reis, docker, user, utilisateur, root, container, makefile]
 comments: false
 image:
   feature: headers/remotework.jpg
@@ -25,7 +25,7 @@ Une fois l'execution de cette commande terminée, vous pouvez lancer très simpl
 sudo docker run hello-world
 {% endhighlight %}
 
-Le résultat de cette commande devrait ressembler à quelquechose comme ça :
+Le résultat de cette commande devrait ressembler à quelque chose comme ça :
 
 {% highlight bash %}
 $ docker run hello-world
@@ -69,12 +69,12 @@ sudo /etc/init.d/docker restart
 {% endhighlight %}
 
 Depuis la version 0.5.3, si l'on (ou l'installeur de Docker) ajoute un group Unix appelé "docker" et qu'on lui ajoute des utilisateurs,
-alors docker donnera accès en lecture/écriture sur le socket Unix au group docker lors du démarrage du process.
+alors docker donnera accès en lecture/écriture sur le socket Unix au groupe docker lors du démarrage du process.
 
 ## Commandes docker sur l'hôte
 
-En effectuant la manipulation décrite précédemment on peut désormais travailler sans root/sudo depuis l'hôte.
-On évite ainsi des certains désagréments :
+Après avoir effectué la manipulation décrite précédemment on peut travailler sans root/sudo depuis l'hôte.
+On évite ainsi certains désagréments :
 
 * Des commandes docker parfois complexe
 
@@ -102,10 +102,10 @@ Par défaut, c'est systématiquement l'utilisateur **root** qui est utilisé.
 C'est avec cet utilisateur que **TOUTES** les commandes sont lancées.
 On ne rencontre ainsi jamais aucun problème en lien avec les droits utilisateurs.
 
-Par contre, cette utilisation de **root** par défaut pose plusieurs problèmes :
+Par contre, cette utilisation de **root** par défaut, pose plusieurs problèmes :
 
 * Aucun contrôle des droits et autorisations.
-* On peut accéder en root à tous les fichiers partagés via un volume.
+* On peut accéder en root à tous les fichiers partagés via un VOLUME.
 * Tous les fichiers créés depuis un container appartiennent à root.
 * On lance en permanence des commandes en root alors que cela n'est pas nécessaire, voire même... pas autorisé par certain programme.
 
@@ -125,7 +125,7 @@ RUN chown -R bob:bob /home/bob
 {% endhighlight %}
 
 Sous Linux, les groupes et les utilisateurs sont gérés via des nombres. Généralement le premier utilisateur classique créé aura l'id 1000.
-C'est pareil pour le premier groupe. Sous Fedora/CentOS, le premier ID attribué sera 500. Ce paramétrage ce trouve en fait dans le fichier
+C'est pareil pour le premier groupe. Sous Fedora/CentOS, le premier ID attribué sera 500. Ce paramétrage se trouve en fait dans le fichier
 `/etc/login.defs`.
 
 {% highlight bash %}
@@ -166,7 +166,7 @@ La solution permattant de travailler dans un container docker avec les mêmes dr
 que l'utilisateur courant, réside dans le fait de créer cet utilisateur et de se connecter avec lors de chaque accès au container.
 
 Je vous présente ci-dessous ma façon de faire à travers un `Makefile`. Cela me permet d'abstraire la compléxité de la commande à éxecuter.
-Mais la solution peut être déclinée pour un fonctionnement via un script shell ou à la main.
+Mais la solution peut être déclinée pour un fonctionnement via un script shell par exemple :
 
 {% highlight bash %}
 TARGET_USERNAME = bob
@@ -176,7 +176,7 @@ UID = $(shell id -u)
 GID = $(shell id -g)
 
 ADD_USER_GROUP_COMMAND = \
-    groupadd -f -g $(GROUP_ID) $(TARGET_GROUPNAME) && \
+    groupadd -f -g $(GID) $(TARGET_GROUPNAME) && \
     useradd -u $(UID) -g $(TARGET_GROUPNAME) $(TARGET_USERNAME) && \
     mkdir -p $(HOMEDIR) &&
 
@@ -186,10 +186,10 @@ START_AS = sudo -E -u $(TARGET_USERNAME) HOME=$(HOMEDIR)
 
 Le code ci-dessus permet l'initialisation de variables afin de configurer différentes chose à la volée :
 
-* La création d'un groupe
-* La création d'utilisateur avec un répertoire racine (/home/bob)
-* Le changement de prorpiétaire du répertoire racine
-* La connexion avec l'utilisateur bobo créé
+* La création d'un groupe.
+* La création d'un utilisateur avec un répertoire racine (/home/bob).
+* Le changement de propriétaire du répertoire racine.
+* La connexion avec l'utilisateur **bob** créé.
 
 **Très important !** L'argument -E de la commande `sudo -E ...` permet la propagation des variables d'environnements (disponibles uniquement pour root par défaut).
 
@@ -207,13 +207,14 @@ bundle:
                 $(START_AS) bundle install --path vendor/bundle'
 {% endhighlight %}
 
-En faisant un `make bundle`, on récupère toutes les dépendances de notre projet dans le dossier `vendor/bundle`
-et comportent le bon groupe et le bon id.
+En faisant un `make bundle`, on récupère toutes les dépendances de notre projet dans le dossier `vendor/bundle`,
+et tous les fichiers comportent le bon groupe et le bon id.
 
 **Ah oui ! Nous avons défini un volume pointant sur le
 répertoire courant du projet afin d'avoir accès aux vendors depuis la machine hôte**.
 
-**Attention !** Si vous travaillez avec **boot2docker** cela ne fonctionnera pas ! Mais vous pouvez essayer d'utiliser les variables suivantes :
+**Attention !** Si vous travaillez avec **boot2docker** cela ne fonctionnera pas !
+Mais vous pouvez essayer d'utiliser les variables suivantes dans le cas où vous souhaitez construire un Makefile compatible avec Docker (Linux) et boot2docker :
 
 {% highlight bash %}
 TARGET_USERNAME = root
@@ -222,6 +223,75 @@ HOMEDIR = /root
 ADD_USER_GROUP_COMMAND =
 {% endhighlight %}
 
-Cela ne vous sera utile que dans le cas où vous souhaitez construire un Makefile compatible avec Docker (Linux) et boot2docker.
+### Quelques astuces
+
+#### Astuce 1
+
+Si vous utilisez les variables `$(ADD_USER_GROUP_COMMAND)`, `$(AUTHORIZE_TARGET_USER_COMMAND) ` et `$(START_AS)` de la même manière lors du lancement
+de différents containers, vous pouvez créer une variable supplémentaire et l'utiliser de cette façon :
+
+{% highlight bash %}
+CUSTOM_CMD = $(ADD_USER_GROUP_COMMAND) \
+    $(AUTHORIZE_TARGET_USER_COMMAND) \
+    $(START_AS)
+
+bundle:
+	@echo "Bundler"
+	@docker-compose run --rm web bash -ci '\
+                $(CUSTOM_CMD) bundle install --path vendor/bundle'
+{% endhighlight %}
+
+#### Astuce 2
+
+Si vous souhaitez déterminer depuis un Makefile si vous êtes sous Linux ou Mac, vous pouvez utiliser ceci :
+
+{% highlight bash %}
+ifeq (Darwin, $(findstring Darwin, $(shell uname)))
+  SYSTEM := OSX
+else
+  SYSTEM := Linux
+endif
+
+ifeq ($(SYSTEM), OSX)
+    ...
+else
+    ...
+endif
+{% endhighlight %}
+
+#### Astuce 3
+
+Pour partager une clé SSH dans un container, vous pouvez utiliser ces variables et VOLUMEs :
+
+{% highlight bash %}
+HOST_KNOWN_HOSTS ?= ~/.ssh/known_hosts
+HOST_IDENTITY ?= ~/.ssh/id_rsa
+
+bundle:
+	@echo "Bundler"
+	@docker-compose run --rm \
+            -v $(HOST_KNOWN_HOSTS):/var/tmp/host_known_hosts \
+            -v $(HOST_IDENTITY):/var/tmp/host_id \
+            web bash -ci '\
+                $(CUSTOM_CMD) bundle install --path vendor/bundle'
+{% endhighlight %}
+
+**Attention !** Cela suppose d'avoir un mécanisme permettant de copier les fichiers `/var/tmp/known_hosts` et `/var/tmp/id`
+au bon endroit lors du lancement du container  :
+
+{% highlight bash %}
+CONFIG_SSH_COMMAND = \
+  mkdir -p $(HOMEDIR)/.ssh && \
+  test -e /var/tmp/host_id && cp /var/tmp/host_id $(HOMEDIR)/.ssh/id_rsa ; \
+  test -e /var/tmp/host_known_hosts && cp /var/tmp/host_known_hosts $(HOMEDIR)/.ssh/known_hosts ; \
+  test -e $(HOMEDIR)/.ssh/id_rsa && chmod 600 $(HOMEDIR)/.ssh/id_rsa ;
+  
+...
+  
+CUSTOM_CMD = $(ADD_USER_GROUP_COMMAND) \
+    $(CONFIG_SSH_COMMAND) \
+    $(AUTHORIZE_TARGET_USER_COMMAND) \
+    $(START_AS)
+{% endhighlight %}
 
 
