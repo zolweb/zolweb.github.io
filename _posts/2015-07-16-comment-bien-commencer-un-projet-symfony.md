@@ -4,7 +4,7 @@ title: Comment bien commencer un projet Symfony
 author: yannick_pereirareis
 excerpt: "Lors de la création d'un nouveau projet, et notamment un projet Symfony, il est nécessaire de penser à un certain nombre de choses très importantes à mettre en place ou configurer. Nous allons en détailler certaines ici."
 tags: [symfony, recommandations, bundles]
-comments: false
+comments: true
 image:
   feature: headers/symfony.png
 ---
