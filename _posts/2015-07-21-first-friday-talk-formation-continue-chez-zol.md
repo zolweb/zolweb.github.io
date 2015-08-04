@@ -6,7 +6,7 @@ excerpt: "A l'origine une demande de l'équipe, aujourd'hui une volonté de ma p
 tags: [fft, formation, équipe]
 comments: true
 image:
-  feature: headers/proxifier-vagrant-docker-sur-une-meme-machine.jpg
+  feature: headers/fft.jpg
 ---
 
 ZOL organise depuis un an maintenant le premier vendredi de chaque mois un meeting réunissant toute l'équipe de ZOL pour discuter, échanger autour de sujets techniques ou non. 
@@ -33,11 +33,8 @@ La valeur de la société est étroitement corrélée à l'équipe qui la compos
 
 ## Quoi ? 
 
-En un an, l'équipe a pu découvrir Behat, Git, ReactJS et Flux, etc etc... Nous avons aussi expérimenter le pair programing sur Symfony, autant de moyen de former l'équipe sur des technos... 
-
-presenter des sujets 
-
-presenter les projets en attente
+En un an, l'équipe a pu découvrir Behat, Git, ReactJS, Flux, Sonata, Docker, Jekyll etc... Nous avons aussi expérimenter le pair programing sur Symfony (très interessant, je pense que ca fera l'objet d'un nouvel article), autant de moyens de former l'équipe sur des technos...
+Le FFT est aussi l'occasion pour Xavier (le commercial) et moi même de présenter les projets à venir, signés ou non, de présenter les retours de nos clients à l'équipe, que chaque membre de l'équipe puisse parler de ce qu'il est en train de faire, et ce qu'il fera dans les semaines à venir... Une sorte de pause café sans café ;).
 
 
 ## Qu'est ce que je changerais ? 
