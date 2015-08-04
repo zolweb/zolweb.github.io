@@ -4,7 +4,7 @@ title: Docker sans utilisateur root sur l'hôte et dans les containers
 author: yannick_pereirareis
 excerpt: "Lorsqu'on travaille avec Docker, par défaut tout se fait en root : installation, lancement de commandes depuis l'hôte et lancement de commandes dans les containers. Mais ce comportement peut être modifié grâce à quelques configurations et lignes de commandes."
 tags: [yannick pereira-reis, docker, user, utilisateur, root, container, makefile]
-comments: false
+comments: true
 image:
   feature: headers/remotework.jpg
 ---

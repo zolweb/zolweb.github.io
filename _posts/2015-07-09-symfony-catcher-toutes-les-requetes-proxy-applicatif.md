@@ -4,7 +4,7 @@ title: Catcher toutes les requêtes avec Symfony afin de réaliser un proxy appl
 author: yannick_pereirareis
 excerpt: "Lorsque l'on réalise une application, notamment lors du développement d'API ou avec l'utilisation de Framework Javascript, il arrive souvent que l'on soit obligé de réaliser un proxy à travers une application backend (pour éviter les erreurs CORS par exemple)"
 tags: [symfony, router, proxy, api]
-comments: false
+comments: true
 image:
   feature: headers/symfony.png
 ---

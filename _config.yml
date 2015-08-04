@@ -35,7 +35,7 @@ owner:
   website: http://www.zol.fr
   google:
     analytics: UA-1934248-11
-
+  disqus-shortname: zolweb
 
 include: [".htaccess", "_sass/vendor"]
 exclude: ["vendor", "lib", "config.rb", "Capfile", "config", "log", "Rakefile", "Rakefile.rb", "tmp", "less", "*.sublime-project", "*.sublime-workspace", "test", "spec", "Gruntfile.js", "package.json", "node_modules", "Gemfile", "Gemfile.lock", "LICENSE", "README.md"]
