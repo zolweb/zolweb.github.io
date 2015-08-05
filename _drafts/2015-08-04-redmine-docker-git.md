@@ -30,7 +30,7 @@ redmine:
 
 ### Limite, solution... 
 
-Sameersbn met à disposition un système permettant d'installer des plugins, il suffit de décompresser les plugins redmine dans le dossier /data/plugins, lors du démarrage du container les plugins seront installés, jusque la à aucun soucis, mais comment faire pour utiliser nos dépôts git. Je rappelle que pour linker des id de commit avec des tasks redmine, il faut que les dépôts bare soient accessibles depuis les sources de redmine. Rien n'est prévu dans l'image de sameersbn pour faire cela.
+Sameersbn met à disposition un système permettant d'installer des plugins, il suffit de décompresser les plugins redmine dans le dossier /data/plugins, lors du démarrage du container les plugins seront installés, jusque là aucun soucis, mais comment faire pour utiliser nos dépôts git. Je rappelle que pour linker des id de commit avec des tasks redmine, il faut que les dépôts bare soient accessibles depuis les sources de redmine. Rien n'est prévu dans l'image de sameersbn pour faire cela.
 
 Pour contourner ce problème, nous avons créé un nouveau répertoire, tiré les repos bare qui nous interessent avec la commande : 
 
@@ -56,7 +56,7 @@ Nous pouvons à ce stade spécifier dans les settings du projet,
 
 <img src="/images/2015-08/redmine-git-settings.png">
 
-Pour associer, un commit à une task, il suffit de spécifier dans le message de commit Refs #id, les commits apparaitront directement dans la task. **Attention, il ne faut spécifier qu'un seul id de task par commit** même si techniquement rien n'empêche dans spécifier plusieurs. 
+Pour associer, un commit à une task, il suffit de spécifier refs #id dans le message, les commits apparaitront directement dans la task. **Attention, il ne faut spécifier qu'un seul id de task par commit** même si techniquement rien n'empêche d'en spécifier plusieurs. 
 
 Il faut maintenant mettre à jour nos repos bare régulièrement, pour cela nous avons utilisé une des fonctionnalités de l'image docker-redmine qui permet d'ajouter des cron au démarrage du container. Nous avons créé un fichier init dans /data/plugins/
 
@@ -80,9 +80,9 @@ rm -rf /tmp/cron.redmine
 ## End of Recurring Tasks Configuration
 {% endhighlight %}
 
-A chaque démarrage du container, on ajoutera donc un cron qui mettre à jour les repo présents dans /home/gitrepositories/
+A chaque démarrage du container, on ajoutera donc un cron qui va mettre à jour les repo présents dans /home/gitrepositories/
 
-Un dernière subtilité... Les repo vont être mis à jour depuis le container redmine... Or nous utilisons une clé de deploiement pour mettre à jour les projets sur la prod. Il faut donc monter un dernier volume contenant le répértoire .ssh de l'utilisateur dont vous vous servez pour faire les git pull dans le container de la machine. Notre fichier docker-compose.yml devient : 
+Une dernière subtilité... Puisque les repo vont être mis à jour depuis le container redmine et que nous utilisons la clé de deploiement de l'utilisateur prod pour mettre à jour les projets. Il faut donc monter un dernier volume contenant le répértoire .ssh de l'utilisateur dont vous vous servez pour faire les git pull dans le container de la machine. Notre fichier docker-compose.yml devient : 
 
 {% highlight bash %}
 redmine:
