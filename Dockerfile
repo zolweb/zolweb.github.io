@@ -23,4 +23,4 @@ WORKDIR /app
 
 EXPOSE 4000
 
-CMD ["bundle", "exec", "jekyll", "serve", "-H0.0.0.0"]
+CMD []

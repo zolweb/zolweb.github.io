@@ -4,7 +4,7 @@ title: Proxifier des machines virtuelles et des containers docker tournant sur l
 author: mathieu_molimard
 excerpt: "Faire fonctionner ensemble des outils comme Vagrant, Nginx, VirtualBox ou encore Docker (et ses containers) sur une même machine, n'est pas toujours facile. Découvrez l'architecture de notre serveur de pré-production et notre utilisation de ces outils."
 tags: [docker, vagrant, nginx]
-comments: false
+comments: true
 image:
   feature: headers/proxifier-vagrant-docker-sur-une-meme-machine.jpg
 ---
