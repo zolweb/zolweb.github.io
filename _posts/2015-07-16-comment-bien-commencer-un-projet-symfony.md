@@ -84,7 +84,7 @@ Il est vivement recommandé de penser à la gestion des migrations et ce depuis 
 **Recherche avancée**
 
 Vous devez mettre en place un module de recherche avancée, une recherche tolérente aux fautes d'orthographes, faire des statistiques sur vos données, ... ?
-Pensez à <a href='https://www.elastic.co/' target='_blank'>Elasticsearch]</a>.
+Pensez à <a href='https://www.elastic.co/' target='_blank'>Elasticsearch</a>.
 
 **Sauvegarde**
 
