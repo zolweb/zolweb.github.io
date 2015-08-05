@@ -6,7 +6,7 @@ excerpt: "Lorsqu'on travaille avec Docker, par défaut tout se fait en root : in
 tags: [yannick pereira-reis, docker, user, utilisateur, root, container, makefile]
 comments: true
 image:
-  feature: headers/remotework.jpg
+  feature: headers/docker.jpg
 ---
 
 ## Installation
