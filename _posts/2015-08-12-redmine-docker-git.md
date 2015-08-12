@@ -11,11 +11,11 @@ image:
 
 ## Redmine, notre outil de gestion de projet
 
-Nous utilisons redmine depuis très longtemps comme interface avec nos clients, saisir des tickets, les timer, rattacher des commits sur ces tâches, saisir nos heures... Redmine a toujours été au coeur de l'organisation de ZOL. La version de notre première instance de redmine est restée figée à 1.1.3 stable : plugins incompatibles, version de ruby obsoléte... A chaque nouvelle version de redmine se posait le même dilemne : upgrader ou garder notre version fonctionnelle, plusieurs expériences malheureuses plus tard ;) nous avions décidé de rester en version 1.1.3, mais ça, c'était avant.
+Nous utilisons redmine depuis très longtemps pour saisir des tickets, les timer, rattacher des commits sur ces tâches, saisir nos heures... Redmine a toujours été au coeur de l'organisation de ZOL. La version de notre première instance de redmine est restée figée à 1.1.3 stable : plugins incompatibles, version de ruby obsoléte... A chaque nouvelle version de redmine se posait le même dilemne : upgrader ou garder notre version fonctionnelle, plusieurs expériences malheureuses plus tard ;) nous avions décidé de rester en version 1.1.3, mais ça, c'était avant.
 
 ### Une version dockerisée
 
-sameersbn met à disposition une version dockerisée régulièrement mise à jour <a href='https://github.com/sameersbn/docker-redmine/' target='_blank'>docker-redmine</a>, nous n'avons plus à nous soucier des mises à jour de version de ruby, il suffit de modifier la version dans le fichier docker-compose.yml  
+**sameersbn** met à disposition une version dockerisée régulièrement mise à jour <a href='https://github.com/sameersbn/docker-redmine/' target='_blank'>docker-redmine</a>, nous n'avons plus à nous soucier des mises à jour de version de ruby, il suffit de modifier la version de l'image docker dans le fichier docker-compose.yml  
  
 {% highlight bash %}
 redmine:
@@ -30,7 +30,7 @@ redmine:
 
 ### Limite, solution... 
 
-Sameersbn met à disposition un système permettant d'installer des plugins, il suffit de décompresser les plugins redmine dans le dossier /data/plugins, lors du démarrage du container les plugins seront installés, jusque là aucun soucis, mais comment faire pour utiliser nos dépôts git. Je rappelle que pour linker des id de commit avec des tasks redmine, il faut que les dépôts bare soient accessibles depuis les sources de redmine. Rien n'est prévu dans l'image de sameersbn pour faire cela.
+L'image sameersbn/redmine permet d'installer des plugins, il suffit de décompresser les plugins redmine dans le dossier /data/plugins, lors du démarrage du container les plugins seront installés, jusque là aucun soucis, mais comment faire pour utiliser nos dépôts git. Je rappelle que pour linker des id de commit avec des tasks redmine, il faut que les dépôts bare soient accessibles depuis les sources de redmine. Rien n'est prévu dans l'image de sameersbn pour faire cela.
 
 Pour contourner ce problème, nous avons créé un nouveau répertoire, tiré les repos bare qui nous interessent avec la commande : 
 
