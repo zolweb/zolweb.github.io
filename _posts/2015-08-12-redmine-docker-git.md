@@ -66,10 +66,11 @@ Il faut maintenant mettre à jour nos repos bare régulièrement, pour cela nous
 # get the list existing cron jobs for the redmine user
 crontab -u redmine -l 2>/dev/null >/tmp/cron.redmine
 
-cd /home/gitrepositories/
+cd /home/gitrepositories
 for folder in *; do 
-echo "* * * * *  cd /home/gitrepositories/${folder} && git fetch origin +refs/heads/*:refs/heads/* && git reset --soft  >> log/cron_rake.log 2>&1" >>/tmp/cron.redmine;
+echo "* * * * *  cd /home/gitrepositories/${folder} && git fetch origin +refs/heads/*:refs/heads/* && git reset --soft" >>/tmp/cron.redmine;
 done;
+echo "* * * * *  cd /home/redmine/redmine && ./bin/rails runner 'Repository.fetch_changesets' -e production >> log/cron_rake.log 2>&1" >>/tmp/cron.redmine;
 
 crontab -u redmine /tmp/cron.redmine 2>/dev/null
 
@@ -78,24 +79,19 @@ crontab -u redmine /tmp/cron.redmine 2>/dev/null
 rm -rf /tmp/cron.redmine
 
 ## End of Recurring Tasks Configuration
+
 {% endhighlight %}
 
 A chaque démarrage du container, on ajoutera donc un cron qui va mettre à jour les repo présents dans /home/gitrepositories/
 
-Une dernière subtilité... Puisque les repo vont être mis à jour depuis le container redmine et que nous utilisons la clé de deploiement de l'utilisateur prod pour mettre à jour les projets. Il faut donc monter un dernier volume contenant le répértoire .ssh de l'utilisateur dont vous vous servez pour faire les git pull dans le container de la machine. Notre fichier docker-compose.yml devient : 
+Une dernière subtilité... Puisque les repo vont être mis à jour depuis le container redmine et que nous utilisons la clé de deploiement de l'utilisateur prod pour mettre à jour les projets, il faut ajouter les clés de l'utilisateur prod dans le dossier data/dotfiles/.ssh/
+A la fois la clé publique et privée, mais aussi le fichier known_hosts, sans quoi il y aura la question : 
 
 {% highlight bash %}
-redmine:
-  image: sameersbn/redmine:3.0.3
-  hostname: redmine
-  domainname: redmine.dev
-  links:
-    - postgresql:postgresql
-...
-      volumes:
-    - "/srv/projects/zol-connect/gitrepositories:/home/gitrepositories"
-    - "/home/prod/.ssh/:/root/.ssh/"
-{% endhighlight %}
+The authenticity of host '111.222.333.444 (111.222.333.444)' can't be established.
+RSA key fingerprint is f3:cf:58:ae:71:0b:c8:04:6f:34:a3:b2:e4:1e:0c:8b.
+Are you sure you want to continue connecting (yes/no)? 
 
+{% endhighlight %}
 
 C'est prêt, vous pouvez utiliser les repos git avec docker tournant sous redmine.
