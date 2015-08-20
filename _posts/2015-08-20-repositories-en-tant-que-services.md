@@ -1,17 +1,19 @@
 ---
 layout: post
-title: Repositories en tant que services
+title: Repositories Doctrine en tant que services
 author: mathieu_tuaillon
-excerpt: "Déclarer ses repositories en tant que services afin de les injecter permet d'obtenir un code plus clair et plus simple à tester."
+excerpt: "Déclarer ses repositories en tant que services permet d'obtenir un code plus clair et plus simple à tester."
 tags: [symfony, doctrine, design]
 comments: false
 image:
   feature: headers/symfony.png
 ---
 
-# Se passer de l'EntityManager de Doctrine
+Les repositories (ou dépôts) sont souvent incontournables au sein d'une application Symfony2. Voyons comment les utiliser de manière plus pertinente depuis nos objets métiers.
 
-Dans le développement Symfony2, une pratique assez courante est d'injecter l'EntityManager de Doctrine dans les services qui servent à manager les entités de l'application :
+## Se passer de l'EntityManager de Doctrine
+
+Une pratique assez courante dans le développement est d'injecter l'EntityManager de Doctrine dans les services qui servent à manager les entités afin d'accéder au repository qui nous intéresse :
 
 {% highlight php startinline %}
 namespace AppBundle\Manager;
@@ -33,17 +35,20 @@ class UserManager
             ->entityManager
             ->getRepository('AppBundle\Entity\User')
             ->findOneById($id)
+        ;
+    }
+}
 {% endhighlight %}
 
-Pourtant, on utilise juste le repository concerné dans ce manager. On pourrait donc se contenter d'injecter uniquement cet élément.
-Cette approche a ses avantages :
+Pourtant, on utilise souvent juste le repository concerné : on pourrait donc se contenter de passer uniquement cet élément à notre objet et non l'EntityManager (de la même manière que l'on évite d'injecter le conteneur de services).
+Cette approche a plusieurs avantages :
 
-* le code est plus clair : on voit directement avec quelles entités l'objet va interagir
+* le code est plus clair et plus simple : on voit directement avec quelles entités l'objet va interagir
 * les mocks et donc les tests seront plus simples à écrire
 
-# Repositories en tant que services
+## Repositories en tant que services
 
-Afin de pouvoir injecter facilement nos repositories, commençons par les déclarer en tant que services. Pour cela, on utilisera la [factory du conteneur de service](http://symfony.com/doc/current/components/dependency_injection/factories.html) :
+Afin de pouvoir injecter facilement nos dépôts, commençons par les déclarer en tant que services. Pour cela, on utilisera la [factory du conteneur de service](http://symfony.com/doc/current/components/dependency_injection/factories.html) :
 
 AppBundle/Resources/config/services.yml
 {% highlight yaml %}
@@ -72,16 +77,17 @@ services:
             - %repository.user%
 {% endhighlight %}
 
-# Utiliser le repository pour sauvegarder les entités
+## Utiliser le dépôt pour sauvegarder les entités
 
 Une problèmatique découle de ce mode de fonctionnement : on a toujours besoin d'accéder à l'EntityManager pour sauvegarder les entités. Pour palier à ça, il suffit d'ajouter une méthode save() dans les repositories.
 
-On va d'abord définir une interface pour généraliser ce mécanisme :
+On va d'abord définir une interface afin de généraliser ce mécanisme :
 
 {% highlight php startinline %}
 namespace AppBundle\Repository;
 
 use Doctrine\Common\Persistence\ObjectRepository;
+use AppBundle\Entity\EntityInterface;
 
 interface EntityRepositoryInterface extends ObjectRepository
 {
@@ -89,7 +95,7 @@ interface EntityRepositoryInterface extends ObjectRepository
 }
 {% endhighlight %}
 
-Les repositories vont pouvoir implémenter cette interface :
+Les repositories vont ensuite pouvoir implémenter cette interface :
 
 {% highlight php startinline %}
 namespace AppBundle\Repository;
@@ -107,7 +113,7 @@ class UserRepository extends EntityRepository implements EntityRepositoryInterfa
 }
 {% endhighlight %}
 
-Le fait d'utiliser une interface va permettre également de supprimer la dépendance à Doctrine du manager, ce qui est toujours mieux pour un objet orienté métier :
+Le fait d'utiliser une interface va également permettre de supprimer le couplage à Doctrine du manager. Voici à quoi ressemble le code final du manager après ces modifications :
 
 {% highlight php startinline %}
 namespace AppBundle\Manager\UserManager;
@@ -123,9 +129,10 @@ class UserManager
         $this->userRepository = $userRepository;
     }
 
-    public function getUser($id)
+    public function createUser()
     {
-        $customer = $this
-            ->userRepository
-            ->findOneById($id)
+        $user = new User();
+        $this->userRepository->save($user);
+    }
+}
 {% endhighlight %}
