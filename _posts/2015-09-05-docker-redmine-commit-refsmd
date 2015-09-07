@@ -2,8 +2,8 @@
 layout: post
 title: Brancher les dépots git dans un redmine tournant sous docker 
 author: mathieu_molimard
-excerpt: "Redmine est depuis très longtemps notre outil de ticket, depuis quelques temps, nous le faisons tourner dans docker ce qui nous permet d'avoir facilement une version à jour, mais nous avions perdu la possibilité de rattacher les repo git au projet... Après quelques recherches, voilà comme nous avons contourné ce problème."
-tags: [mathieu molimard, docker, redmine, git]
+excerpt: "Redmine est depuis très longtemps notre outil de ticket, depuis quelques temps, nous le faisons tourner dans docker ce qui nous permet d'avoir facilement une version à jour, mais nous avions perdu la possibilité de rattacher les repo git aux projets pour récupérer les refs de commit directement dans les tasks... Après quelques recherches, voilà comme nous avons contourné ce problème."
+tags: [mathieu molimard, docker, redmine, git, refs, bare]
 comments: true
 image:
   feature: headers/docker.jpg
