@@ -2,8 +2,8 @@
 layout: post
 title: Repositories Doctrine en tant que services
 author: mathieu_tuaillon
-excerpt: "Déclarer ses repositories en tant que services permet d'obtenir un code plus clair et plus simple à tester."
-tags: [symfony, doctrine, design]
+excerpt: "Déclarer ses repositories Doctrine en tant que services dans Symfony2 permet d'obtenir un code plus clair et plus simple à tester."
+tags: [doctrine, repository, entity manager, symfony2, service container]
 comments: false
 image:
   feature: headers/symfony.png
