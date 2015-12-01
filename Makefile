@@ -39,7 +39,7 @@ build: remove
 	@echo "$(step) Building images docker $(step)"
 	@$(compose) build  $(COMMAND_ARGS)
 
-install: remove build bundle jkbuild jkserve
+install: remove build jkbuild jkserve
 
 bundle:
 	@echo "$(step) Bundler $(step)"

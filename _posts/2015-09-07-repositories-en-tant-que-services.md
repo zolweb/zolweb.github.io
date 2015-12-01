@@ -68,6 +68,14 @@ services:
             - AppBundle\Entity\User
 {% endhighlight %}
 
+A noter si vous utilisez une version de Symfony inférieure à 2.6, il faudra utiliser l'ancienne manière d'utiliser la factory (merci à @FlavienMetivier pour l'information) :
+
+{% highlight yaml %}
+    factory_service: doctrine.orm.default_entity_manager
+    factory_method: getRepository
+{% endhighlight %}
+
+
 AppBundle/Resources/config/managers.yml
 {% highlight yaml %}
 services:
