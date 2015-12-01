@@ -3,4 +3,4 @@ web:
   volumes:
    - .:/app
   environment:
-       VIRTUAL_HOST: blog.zol.dev
+       VIRTUAL_HOST: blog.dev.zol.fr

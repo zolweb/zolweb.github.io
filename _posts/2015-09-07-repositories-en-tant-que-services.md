@@ -72,7 +72,7 @@ A noter si vous utilisez une version de Symfony inférieure à 2.6, il faudra ut
 {% highlight yaml %}
     factory_service: doctrine.orm.default_entity_manager
     factory_method: getRepository
-{% hightlight %}
+{% endhighlight %}
 
 AppBundle/Resources/config/managers.yml
 {% highlight yaml %}

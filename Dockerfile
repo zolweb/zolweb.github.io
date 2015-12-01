@@ -8,11 +8,11 @@ RUN apt-get update && apt-get install -y \
 	ruby-dev \
 	make \
 	gcc \
-	rubygems-integration	
+	rubygems-integration
 
 # Install jekyll
 
-RUN gem install jekyll
+RUN gem install jekyll -v 2.5.3
 RUN gem install jekyll-sitemap
 RUN gem install bundler
 RUN gem install octopress --pre
