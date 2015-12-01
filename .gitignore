@@ -7,7 +7,6 @@ codekit-config.json
 /vendor/
 node_modules
 _asset_bundler_cache
-.bundle/
 .idea/
 nohup.out
 .project
