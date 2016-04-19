@@ -1,9 +1,9 @@
 ---
 layout: post
-title: Comment mettre en place des tests Behat utilisant le driver Selenium sous Docker ?
+title: Tests fonctionnels avec Behat et Selenium sous Docker
 author: christophe_hautenne
-excerpt: "Les tests fonctionnels couvrent l’expérience utilisateur, or le javascript est de plus en plus au cœur des sites web. Qu'en est-il des tests js, qui plus est sous docker ?"
-tags: [docker; selenium, behat, mink]
+excerpt: "Automatiser des tests fonctionnels avec Behat est une chose courante et plutôt facile à mettre en place. Par contre, dès qu'il sagit de tester les fonctionnalités impliquant du javascript, la tâche est moins aisée. Voyons comment faire avec Selenium et Docker."
+tags: [docker, selenium, behat, mink, test, fonctionnel, driver, docker-compose, vnc]
 comments: true
 image:
   feature: headers/behat.jpg
@@ -110,13 +110,9 @@ docker run -d --name reverseproxy -p 80:80 -p 443:443 -v /var/run/docker.sock:/t
 
 {% endhighlight %}
 
-## Objectif
+### Commençons !
 
-Le but ici est d'arriver à lancer des tests Behat sur du javascript, à l'aide d'un serveur Selenium, l'idéal étant de pouvoir voir en live les tests s’exécuter. Le tout bien sûr à l'aide de Docker.
-
-## Commençons !
-
-La première chose à faire, ce sont les containers Selenium. Comme promis, nous allons faire tourner tout ça sous Docker, or il existe sur le docker hub tout plein d'images qui vont vous servir suivant votre cas.
+La première chose à faire, ce sont les containers Selenium. Comme promis, nous allons faire tourner tout ça sous Docker, or il existe sur le docker hub une multitude d'images couvrant de nombreux cas d'usage.
 
 #### Rappel du fonctionnement de Selenium
 
@@ -127,7 +123,7 @@ Crédits: [BioDesignAutomation](http://biodesignautomation.org/category/setting-
 
 #### Choix des images
 
-Il existe (un repo GitHub)[https://github.com/SeleniumHQ/docker-selenium] contenant des images dockers pour Selenium qui vont nous intéresser. Deux façons de procéder sont possibles : soit on utilise deux images, une pour le hub et une pour le nœud, soit une seul image "standalone" qui contient à la fois le hub et le nœud.
+Il existe [un repo GitHub](https://github.com/SeleniumHQ/docker-selenium) contenant des images dockers pour Selenium qui vont nous intéresser. Deux façons de procéder sont possibles : soit on utilise plusieurs images, une pour le hub et une par nœud, soit une seul image "standalone" qui contient à la fois le hub et le nœud.
 
 Pour ma part et pour l'exemple, j'utiliserai 3 images :
 
@@ -172,7 +168,7 @@ firefoxtesting:
 
 {% endhighlight %}
 
-Les versions des images sont fixées aux dernières récentes à la date de rédaction de cet article.
+Les versions des images sont fixées aux plus récentes à la date de rédaction de cet article.
 
 * hubtesting : c'est notre hub. Il ne faut pas oublier d'ouvrir le port 4444 qui va permettre aux futurs nœuds de s'y connecter
 * chrometesting : notre premier nœud. On ouvre le port 5900 pour pouvoir se connecter au serveur VNC.
@@ -280,9 +276,11 @@ _Notez l'url à utiliser ainsi que le port d'écoute pour les nœuds : http://ch
 
 Enfin pour la session on précise le navigateur à utiliser (par défaut c'est firefox il me semble).
 
-Maintenant on va créer deux suites qui utiliseront leur session respective, afin de lancer les tests sur les deux navigateurs. La configuration des suites est assez similaire à celle de web, avec la particularité qu'on indique quelle session utiliser en cas de scenario nécessitant du javascript. Pour rappel, il suffit d'utiliser le tag @javascript sur un scenario pour indiquer à Mink d'utiliser le bon driver.
+Il ne restera plus qu'à créer deux suites qui utiliseront leur session respective, afin de lancer les tests sur les deux navigateurs. La configuration des suites est assez similaire à celle de web, avec la particularité qu'on indique quelle session utiliser en cas de scenario nécessitant du javascript.
 
-Petite touche personnelle : j'aime rajouter sur mes features un tag supplémentaire @web ou @testing_js pour la compréhension quand on est dans le développement de la feature. Cela permet de garder à l'esprit lorsqu'on écrit un test les différentes restrictions liées au driver (exemple : le "response status code" n'est pas disponible avec le driver selenium)
+_Pour rappel, il suffit d'utiliser le tag @javascript sur un scenario pour indiquer à Mink d'utiliser le bon driver._
+
+Etant donné que les tests webs et js sont dans le même dossier, j'utilise les tags pour filtrer les scenarios (@web pour les tests webs et @testing_js pour les tests javascripts). Vous pouvez ne pas utiliser de tags en déplacant les scenarios dans deux dossiers distincts, pensez simplement à modifier la propriété `paths` en conséquence
 
 
 ### Lancement des images
