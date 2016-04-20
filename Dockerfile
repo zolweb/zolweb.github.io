@@ -8,7 +8,8 @@ RUN apt-get update && apt-get install -y \
 	ruby-dev \
 	make \
 	gcc \
-	rubygems-integration
+	rubygems-integration \
+    sudo
 
 # Install jekyll
 
