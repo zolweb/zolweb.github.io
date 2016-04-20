@@ -62,8 +62,7 @@ AppBundle/Resources/config/repositories.yml
 services:
     repository.user:
         class: Doctrine\ORM\EntityRepository
-        factory_service: doctrine.orm.default_entity_manager
-        factory_method: getRepository
+        factory: [@doctrine.orm.default_entity_manager, getRepository]
         arguments:
             - AppBundle\Entity\User
 {% endhighlight %}
@@ -74,7 +73,6 @@ A noter si vous utilisez une version de Symfony inférieure à 2.6, il faudra ut
     factory_service: doctrine.orm.default_entity_manager
     factory_method: getRepository
 {% endhighlight %}
-
 
 AppBundle/Resources/config/managers.yml
 {% highlight yaml %}
