@@ -6,7 +6,7 @@ excerpt: "Avec Docker, tester de nouveaux logiciels est extrêmement facile, nou
 tags: [docker, monitoring, real-time, linux]
 comments: true
 image:
-  feature: headers/docker.jpg
+  feature: headers/monitoring.jpg
 ---
 
 Yannick, notre lead chéri, a vu passer un outil très interessant pour le monitoring des serveurs. Il s'agit de netdata, clonable depuis : [https://github.com/firehol/netdata.git](https://github.com/firehol/netdata.git)
