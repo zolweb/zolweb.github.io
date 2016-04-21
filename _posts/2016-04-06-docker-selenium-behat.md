@@ -6,7 +6,7 @@ excerpt: "Automatiser des tests fonctionnels avec Behat est une chose courante e
 tags: [docker, selenium, behat, mink, test, fonctionnel, driver, docker-compose, vnc]
 comments: true
 image:
-  feature: headers/behat.jpg
+  feature: headers/selenium.jpg
 ---
 
 # Introduction
@@ -54,7 +54,7 @@ default:
                 - "/src/AppBundle/Tests/Scenarios"
             contexts:
                 - Behat\MinkExtension\Context\MinkContext
-                
+
     extensions:
         Behat\Symfony2Extension: ~
         Behat\MinkExtension:
@@ -230,7 +230,7 @@ default:
                 - AppBundle\Tests\Contexts\FeatureContext
             filters:
                 tags: @testing_js
-                
+
     extensions:
         Behat\Symfony2Extension: ~
         Behat\MinkExtension:
@@ -285,7 +285,7 @@ Etant donné que les tests webs et js sont dans le même dossier, j'utilise les 
 
 ### Lancement des images
 
-Discernons d'abord le rôle de chaque container : 
+Discernons d'abord le rôle de chaque container :
 * `web` : c'est à partir de ce container qu'est lancée la commande behat (et donc le fichier behat.yml est interprété). C'est aussi sur ce container que sont joués les tests ne nécessitant pas de driver JS
 * `hubtesting` : container servant de point central pour les nœuds selenium
 * `chrometesting` / `firefoxtesting` : nœuds disposant d'un navigateur pour exécuter les tests javascripts
