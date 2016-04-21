@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Déployer un dashboard de monitoring via Docker
+title: Déployer un dashboard de monitoring temps réel via Docker
 author: mathieu_molimard
 excerpt: "Avec Docker, tester de nouveaux logiciels est extrêmement facile, nous allons tester aujourd'hui un outil de monitoring temps reel"
 tags: [docker, monitoring, real-time, linux]
@@ -9,7 +9,7 @@ image:
   feature: headers/docker.jpg
 ---
 
-Yannick, notre lead, a vu passer un outil très interessant pour le monitoring des serveurs. Il s'agit de netdata, clonable depuis : [https://github.com/firehol/netdata.git](https://github.com/firehol/netdata.git)
+Yannick, notre lead chéri, a vu passer un outil très interessant pour le monitoring des serveurs. Il s'agit de netdata, clonable depuis : [https://github.com/firehol/netdata.git](https://github.com/firehol/netdata.git)
 
 Je ne vous parlerai pas de la myriade d'options disponibles, tout est extremement bien détaillé sur le wiki du projet ([https://github.com/firehol/netdata/wiki](https://github.com/firehol/netdata/wiki))
 
